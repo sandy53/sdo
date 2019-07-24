@@ -12,6 +12,8 @@ public enum RecordEnum {
                         /** 首页概况 */
                         DocContent,
 
+                        Files,
+
                         /** 通用统计 */
                         GENERIC_COUNT,
                         /** 通用统计日志 */

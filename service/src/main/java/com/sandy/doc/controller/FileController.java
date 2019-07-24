@@ -4,11 +4,17 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sandy.common.util.BASE64ImageUtil;
+import com.sandy.doc.enums.UploadType;
+import com.sandy.doc.model.Files;
+import com.sandy.doc.service.FileService;
 
 /**
  * 图片，文件上传控制器
@@ -31,40 +40,47 @@ import com.sandy.common.util.BASE64ImageUtil;
 public class FileController {
     private Logger              logger   = LoggerFactory.getLogger(BASE64ImageUtil.class);
 
-    private static final String BASE_DIR = System.getProperty("user.home");
+    private static final String BASE_DIR = System.getProperty("user.home") + "/sdo/images";
 
-    private String save(MultipartFile imageFile) {
-        
-        File file = new File(BASE_DIR + "/sdo/test/images");
-        if(!file.exists()) {
-            file.mkdirs();
-        }
-        String fullName = file.getPath() + File.separator + imageFile.getOriginalFilename();
-        file = new File(fullName);
-        try (InputStream inputStream = imageFile.getInputStream();
-                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));) {
-            int len = 0;
-            byte[] b = new byte[1024 * 10];
-            while ((len = inputStream.read(b)) != -1) {
-                bos.write(b, 0, len);
-            }
-        } catch (Exception e) {
-            logger.error("", e);
-        }
-        return "/images/" + imageFile.getOriginalFilename();
+    @Resource
+    private FileService         fileService;
 
-        /*      BufferedImage buffImg = null;
-        try  {
-        
-            buffImg = ImageIO.read(imageFile.getInputStream());
-            boolean write = ImageIO.write(buffImg, "jpg", file);
-            System.err.println(write);
-        } catch (IOException e) {
-            logger.error("", e);
-        }*/
+    private Files genernateFile(MultipartFile imageFile, String uploadType) {
+        Files files = new Files();
+        files.setCode(getFileCode());
+        files.setName(imageFile.getOriginalFilename());
+        files.setCreateTime(System.currentTimeMillis());
 
+        StringBuilder path = new StringBuilder();
+        path.append(File.separator);
+        path.append(getUploadType(uploadType));
+        path.append(File.separator);
+        path.append(getFolder());
+        //TODO
+        //   files.setUcode(ucode);
+        files.setPath(path.toString());
+
+        //保存到数据库
+        fileService.doSave(files);
+        return files;
     }
 
+    private String getFileCode() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    private String getFolder() {
+        DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyyMMdd");
+        return LocalDate.now().format(formatter);
+    }
+
+    private UploadType getUploadType(String uploadType) {
+        if (StringUtils.isEmpty(uploadType)) {
+            return UploadType.common;
+        }
+        UploadType type = UploadType.valueOf(uploadType);
+        return type == null ? type : UploadType.common;
+    }
 
     /**
      * TODO
@@ -77,45 +93,41 @@ public class FileController {
     @RequestMapping(value = "/upload/image", method = RequestMethod.POST)
     @ResponseBody
     public Object doUpload(@RequestParam(value = "imgFile", required = true) MultipartFile[] images,
-                                   String uploadType) {
+                           String uploadType) {
 
         System.err.println(images);
         List<String> names = new ArrayList<>();
         for (MultipartFile multipartFile : images) {
             //
-            names.add(save(multipartFile));
+            names.add(save(multipartFile, uploadType));
         }
-
-        /* Assert.notNull(file);
-        String filePath = fileMainDir;
-        uploadType = StringUtil.isBlank(uploadType) ? "" : uploadType;
-        filePath = filePath + FileUtil.getFilePath(uploadType) + "/";
-        RespCode resultCode = ResultCode.SUCCESS;
-        Files record = null;
-        try {
-            long fileSize = file.getSize();
-            if (fileSize > PlatConfig.getMaxImageSize()) {
-                resultCode = ResultCode.FILE_UPLOAD_TOOLARGE;
-                // msg = "图片上传失败,图片大小不能超过2MB";
-            } else {
-                String fileExt = FileUtil.getFileExt(file.getOriginalFilename());
-                record = fileService.uploadFile(PlatConfig.getBucketName(), fileExt, filePath,
-                    file.getInputStream());
-            }
-        } catch (BusinessException e) {
-            resultCode = e.getCode();
-            logger.error("FileController", e);
-        } catch (Exception e) {
-            logger.error("FileController", e);
-            resultCode = ResultCode.FILE_UPLOAD_FAIL;
-        }*/
-        //result.setData(record);
-
         Map<String, Object> map = new HashMap<>();
-        
         map.put("data", names);
         map.put("errno", 0);
         return map;
 
     }
+
+    private String save(MultipartFile imageFile, String uploadType) {
+        Files sdoFile = genernateFile(imageFile, uploadType);
+        File file = new File(BASE_DIR + sdoFile.getPath());
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String fullName = file.getPath() + File.separator + sdoFile.getFileName();
+        file = new File(fullName);
+        try (InputStream inputStream = imageFile.getInputStream();
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));) {
+            int len = 0;
+            byte[] b = new byte[1024 * 10];
+            while ((len = inputStream.read(b)) != -1) {
+                bos.write(b, 0, len);
+            }
+        } catch (Exception e) {
+            logger.error("", e);
+        }
+        return "/images/" + sdoFile.getPath() + File.separator + sdoFile.getFileName();
+
+    }
+
 }
