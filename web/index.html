@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sdo : Admin Kit</title>
+	
+	<!-- ================= Favicon ================== -->
+    <!-- Standard -->
+    <!-- <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff"> -->
+    <!-- Retina iPad Touch Icon-->
+    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
+    <!-- Retina iPhone Touch Icon-->
+    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
+    <!-- Standard iPad Touch Icon--> 
+    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
+    <!-- Standard iPhone Touch Icon--> 
+    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
+	
+	<!-- Styles -->
+    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="assets/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="assets/css/lib/weather-icons.css" rel="stylesheet" />
+    <link href="assets/css/lib/mmc-chat.css" rel="stylesheet" />
+    <link href="assets/css/lib/sidebar.css" rel="stylesheet">
+    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/lib/simdahs.css" rel="stylesheet">
+    <link href="assets/css/sandy/common.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <style type="text/css">
+    	
+    	.sidebar{
+    		width: 300px;
+    	}
+    	.sidebar .nano-content>ul {
+			width: 300px;
+		}
+		.sidebar.sidebar-shrink ~ .content-wrap {
+			margin-left: 300px;
+		}
+
+		/** 业务 */
+
+		#doc-content {
+			padding: 5px;
+		    padding-top: 10px;
+			min-height: 200px;
+			border-top: 1px solid #eee;
+		}
+    </style>
+
+</head>
+
+<body>
+
+<!-- 等候 -->
+<span class="ms-loading ms-loading-first"></span>
+<span class="ms-loading ms-loading-second"></span>
+
+    <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+        <div class="nano">
+            <div class="nano-content">
+                <ul id="sidebar-menu">
+					<li class="label">Main</li>
+                    <li class="active"><a href="index.html"><i class="ti-home"></i> Dashboard </a></li>	            
+                    <li><a href="app-profile.html"><i class="ti-user"></i> Profile</a></li>
+					<li class="label">Document</li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- /# sidebar -->
+
+
+
+
+    <div class="header">
+        <div class="pull-left">
+            <div class="logo" id="sideLogo">
+                <a href="index.html">
+                	S do
+                   <!--  <img class="full-logo" src="assets/images/logo-big.png" alt="SimDahs">
+                    <img class="small-logo" src="assets/images/logo-small.png" alt="SimDahs"> -->
+                </a>
+            </div>
+            <div class="hamburger sidebar-toggle">
+                <span class="ti-menu"></span>
+            </div>
+        </div>
+
+        <div class="pull-right p-r-15">
+            <ul>
+                <li class="header-icon dib"><i class="ti-bell"></i>
+                    <div class="drop-down">
+                        <div class="dropdown-content-heading">
+                            <span class="text-left">Recent Notifications</span>
+                        </div>
+                        <div class="dropdown-content-body">
+                            <ul>
+                              <!--   <li>
+                                    <a href="#">
+                                        <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+                                        <div class="notification-content">
+                                            <small class="notification-timestamp pull-right">02:34 PM</small>
+                                            <div class="notification-heading">Mr. Wolf</div>
+                                            <div class="notification-text">5 members joined today </div>
+                                        </div>
+                                    </a>
+                                </li> -->
+                               
+                                <li class="text-center">
+                                    <a href="#" class="more-link">See All</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="header-icon dib"><i class="ti-email"></i>
+                    <div class="drop-down">
+                        <div class="dropdown-content-heading">
+                            <span class="text-left">2 New Messages</span>
+                            <a href="email.html"><i class="ti-pencil-alt pull-right"></i></a>
+                        </div>
+                        <div class="dropdown-content-body">
+                            <ul>
+                               <!--  <li class="notification-unread">
+                                    <a href="#">
+                                        <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/1.jpg" alt="" />
+                                        <div class="notification-content">
+                                            <small class="notification-timestamp pull-right">02:34 PM</small>
+                                            <div class="notification-heading">John Doe</div>
+                                            <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
+                                        </div>
+                                    </a>
+                                </li> -->
+
+
+                                <li class="text-center">
+                                    <a href="#" class="more-link">See All</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+				<li class="header-icon dib chat-sidebar-icon"><i class="ti-comment"></i></li>
+              <!--   <li class="header-icon dib"><img class="avatar-img" src="assets/images/avatar/1.jpg" alt="" /> <span class="user-avatar">Wolf <i class="ti-angle-down f-s-10"></i></span>
+                    <div class="drop-down dropdown-profile">
+                        <div class="dropdown-content-heading">
+                            <span class="text-left">Upgrade Now</span>
+                            <p class="trial-day">30 Days Trail</p>
+                        </div>
+                        <div class="dropdown-content-body">
+                            <ul>
+                                <li><a href="#"><i class="ti-user"></i> <span>Profile</span></a></li>
+                                <li><a href="#"><i class="ti-wallet"></i> <span>My Balance</span></a></li>
+                 
+                            </ul>
+                        </div>
+                    </div>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-2 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1><a href="./new.html" target="_blank"><i class="ti-plus"></i></a></h1>
+                            </div>
+                        </div>
+                    </div><!-- /# column -->
+                    <div class="col-lg-10 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li class="root"><a href="#">Document</a></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /# column -->
+                </div><!-- /# row -->
+                <div class="main-content">
+					<div class="row"> 
+						<div class="col-lg-12">
+							<div class="card alert">
+								<div class="card-header">
+									<h4 id="doc-info-title"></h4>
+									<div class="card-header-right-icon">
+										<span id="doc-info-time"></span>
+									</div>
+								</div>
+								<div id="doc-content">
+									
+								</div>
+							</div>
+						</div><!-- /# column -->
+                    </div><!-- /# row -->
+
+                    <!-- row for remarks -->
+                    <div class="row"> 
+						<div class="col-lg-12">
+							<div class="card alert">
+								<div class="card-header">
+									<!-- <h4>Earning Graph</h4>
+									<div class="card-header-right-icon">
+										<ul>
+											<li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li> 
+										</ul>
+									</div> -->
+								</div>
+								<div class="doc-remarks">
+									 <div class="form-group">
+                                        <label>不说点啥再走么</label>
+                                        <textarea class="form-control" rows="3" placeholder="不留个爪？"  style="resize: vertical;"></textarea>
+                                    </div>
+								</div>
+							</div>
+						</div><!-- /# column -->
+                    </div><!-- /# row -->
+
+                </div>
+			</div>
+						
+		</div>	
+     <!-- /# main content -->More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - 
+     	Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+            <!-- /# container-fluid -->
+        </div><!-- /# main -->
+    </div><!-- /# content wrap -->
+	
+	
+	
+    <script src="assets/js/lib/jquery.min.js"></script><!-- jquery vendor -->
+    <script src="assets/js/lib/jquery.nanoscroller.min.js"></script><!-- nano scroller -->    
+    <script src="assets/js/lib/sidebar.js"></script><!-- sidebar -->
+    <script src="assets/js/lib/bootstrap.min.js"></script><!-- bootstrap -->
+    <script src="assets/js/lib/mmc-common.js"></script>
+
+    <script src="assets/js/scripts.js"></script><!-- scripit init-->
+   <script src="assets/js/path.js?t=1231"></script>
+   <script src="assets/js/utils/common_util.js?t=1231"></script>
+   <script src="assets/js/index.js?t=1231"></script>
+
+
+	<script>
+		$(function() {
+			Index.init();
+		});
+   </script>
+
+</body>
+</html>

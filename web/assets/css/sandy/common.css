@@ -1,0 +1,40 @@
+.ms-loading{
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		top: 0px;
+		background: #428bca;
+		display: none;
+		z-index: 2000;		
+	}
+	.ms-loading-show {
+		display: block;
+	}
+	.ms-loading-first{
+		left: 10px;		
+		animation: loading-first 5s;
+		-moz-animation: loading-first 5s;	/* Firefox */
+		-webkit-animation: loading-first 5s infinite ;	/* Safari 和 Chrome */
+		-o-animation: loading-first 5s;	/* Opera */
+	}
+	.ms-loading-second{
+		left: 0px;
+		animation: loading-second 5s;
+		-moz-animation: loading-second 5s;	/* Firefox */
+		-webkit-animation: loading-second 5s infinite ;	/* Safari 和 Chrome */
+		-o-animation: loading-second 5s;	/* Opera */
+	}	
+	
+	@-webkit-keyframes loading-first {/* Safari 和 Chrome */
+		0%   {left:0px;}
+		60%  { left:600px; opacity:1;}
+		90% {left: 99%;}
+		100% {left : 99.1%; opacity:0.1;}
+	}
+	@-webkit-keyframes loading-second { /* Safari 和 Chrome */
+		0%   {left:0px;}
+		10%   {left:0px;}
+		60%  { left:590px; opacity:1;}
+		99% {left: 99%;}
+		100% {left : 99.1%; opacity:0.1;}
+	}

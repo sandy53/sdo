@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Sdo : Admin Kit</title>
+
+<!-- ================= Favicon ================== -->
+<!-- Standard -->
+<!-- <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff"> -->
+<!-- Retina iPad Touch Icon-->
+<link rel="apple-touch-icon" sizes="144x144"
+	href="http://placehold.it/144.png/000/fff">
+<!-- Retina iPhone Touch Icon-->
+<link rel="apple-touch-icon" sizes="114x114"
+	href="http://placehold.it/114.png/000/fff">
+<!-- Standard iPad Touch Icon-->
+<link rel="apple-touch-icon" sizes="72x72"
+	href="http://placehold.it/72.png/000/fff">
+<!-- Standard iPhone Touch Icon-->
+<link rel="apple-touch-icon" sizes="57x57"
+	href="http://placehold.it/57.png/000/fff">
+
+<!-- Styles -->
+<link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
+<link href="assets/css/lib/themify-icons.css" rel="stylesheet">
+<link href="assets/css/lib/owl.carousel.min.css" rel="stylesheet" />
+<link href="assets/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+<link href="assets/css/lib/sidebar.css" rel="stylesheet">
+<link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+<link href="assets/css/lib/toastr/toastr.min.css" rel="stylesheet">
+<link href="assets/css/lib/simdahs.css" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+
+<style type="text/css">
+.sidebar {
+	width: 300px;
+}
+
+.sidebar .nano-content>ul {
+	width: 300px;
+}
+
+.sidebar.sidebar-shrink ~ .content-wrap {
+	margin-left: 300px;
+}
+
+/** wang edit*/
+[contenteditable]:hover, [contenteditable]:focus {
+	background: none;
+}
+.w-e-text-container {
+    position: inherit !important;
+    overflow: hidden !important;
+    height: auto  !important;
+    min-height: 500px;
+}
+.w-e-text{
+	height: 100%;
+	min-height: 500px;
+	overflow: hidden !important;
+	padding-bottom: 10px;
+}
+.w-e-toolbar{
+	height: 100%;
+	  overflow: visible !important;
+}
+
+/** */
+
+/** 业务 */
+html, body {
+	height: 100%;
+}
+body{
+	overflow: auto;
+}
+
+.content-wrap {
+		height: 100%;
+		overflow-y: scroll;
+		padding-bottom: 20px;
+}
+
+#input-doc-content {
+  overflow: visible !important;
+}
+
+.main-content {
+	margin-top: 40px;
+	margin-bottom: 100px;
+}
+
+.doc-content {
+	min-height: 100px;
+	overflow: visible !important;
+}
+.doc-update-footer {
+	position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    padding-right: 100px;
+    z-index: 9999;
+    text-align: right;
+}
+</style>
+
+</head>
+
+<body>
+
+	<div class="header">
+		<div class="pull-left">
+			<div class="logo" id="sideLogo">
+				<a href="index.html"> S do <!--  <img class="full-logo" src="assets/images/logo-big.png" alt="SimDahs">
+                    <img class="small-logo" src="assets/images/logo-small.png" alt="SimDahs"> -->
+				</a>
+			</div>
+		</div>
+		<div class="pull-right p-r-15">
+			<ul>
+				<li class="header-icon dib"><i class="ti-bell"></i>
+					<div class="drop-down">
+						<div class="dropdown-content-heading">
+							<span class="text-left">Recent Notifications</span>
+						</div>
+						<div class="dropdown-content-body">
+							<ul>
+					<!-- 			<li><a href="#"> <img
+										class="pull-left m-r-10 avatar-img"
+										src="assets/images/avatar/3.jpg" alt="" />
+										<div class="notification-content">
+											<small class="notification-timestamp pull-right">02:34
+												PM</small>
+											<div class="notification-heading">Mr. Wolf</div>
+											<div class="notification-text">5 members joined today</div>
+										</div>
+								</a></li>
+ -->
+								<li class="text-center"><a href="#" class="more-link">See
+										All</a></li>
+							</ul>
+						</div>
+					</div></li>
+				<li class="header-icon dib"><i class="ti-email"></i>
+					<div class="drop-down">
+						<div class="dropdown-content-heading">
+							<span class="text-left">2 New Messages</span> <a
+								href="email.html"><i class="ti-pencil-alt pull-right"></i></a>
+						</div>
+						<div class="dropdown-content-body">
+							<ul>
+								<!-- <li class="notification-unread"><a href="#"> <img
+										class="pull-left m-r-10 avatar-img"
+										src="assets/images/avatar/1.jpg" alt="" />
+										<div class="notification-content">
+											<small class="notification-timestamp pull-right">02:34
+												PM</small>
+											<div class="notification-heading">John Doe</div>
+											<div class="notification-text">Hi Teddy, Just wanted to
+												let you ...</div>
+										</div>
+								</a></li>
+ -->
+
+								<li class="text-center"><a href="#" class="more-link">See
+										All</a></li>
+							</ul>
+						</div>
+					</div></li>
+				<li class="header-icon dib chat-sidebar-icon"><i
+					class="ti-comment"></i></li>
+				<!-- <li class="header-icon dib"><img class="avatar-img"
+					src="assets/images/avatar/1.jpg" alt="" /> <span
+					class="user-avatar">Wolf <i class="ti-angle-down f-s-10"></i></span>
+					<div class="drop-down dropdown-profile">
+						<div class="dropdown-content-heading">
+							<span class="text-left">Upgrade Now</span>
+							<p class="trial-day">30 Days Trail</p>
+						</div>
+						<div class="dropdown-content-body">
+							<ul>
+								<li><a href="#"><i class="ti-user"></i> <span>Profile</span></a></li>
+								<li><a href="#"><i class="ti-wallet"></i> <span>My
+											Balance</span></a></li>
+
+							</ul>
+						</div>
+					</div></li> -->
+			</ul>
+		</div>
+	</div>
+
+
+
+	<div class="content-wrap">
+		<div class="main">
+			<div class="container-fluid">
+				<div class="main-content">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card alert">
+								<div class="card-header">
+									<ol class="breadcrumb text-left">
+	                                    <li class="root"><a href="javascript:void(0);">Document</a></li>
+	                                </ol>
+									<div class="form-group">
+										<input type="text" id="input-doc-title"
+											class="form-control input-focus" placeholder="这里需要一个吊炸天的标题" >
+									</div>
+								</div>
+									  
+								<div class="doc-content">
+									<div id="input-doc-content">
+										<!-- 内容 -->
+									</div>
+								</div>
+								<!-- <div class="card-header-right-icon">
+										<ul>
+											<li class="card-close">
+												<button type="button" class="btn btn-primary btn-flat m-b-10 m-l-5">Primary</button>
+											</li> 
+										</ul>
+									</div> -->
+							</div>
+						</div>
+						<!-- /# column -->
+					</div>
+					<!-- /# row -->
+
+
+					
+	
+
+				</div>
+			</div>
+
+		</div>
+		
+		<div class="doc-update-footer">
+						<button type="button" id="btn-doc-save" class="btn btn-primary btn-flat m-b-10 m-l-5">&nbsp;Save&nbsp;</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn  btn-flat m-b-10 m-l-5">取消</button>
+		</div>
+		
+		<!-- /# main content -->
+		More Templates <a href="http://www.cssmoban.com/" target="_blank"
+			title="模板之家">模板之家</a> - Collect from <a
+			href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+		<!-- /# container-fluid -->
+	</div>
+	<!-- /# main -->
+	<!-- /# content wrap -->
+
+
+
+	<script src="assets/js/lib/jquery.min.js"></script>
+	<!-- jquery vendor -->
+	<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+	<!-- nano scroller -->
+	<script src="assets/js/lib/sidebar.js"></script>
+	<!-- sidebar -->
+	<script src="assets/js/lib/bootstrap.min.js"></script>
+	<!-- bootstrap -->
+	<script src="assets/js/lib/mmc-common.js"></script>
+
+	<script src="assets/js/lib/toastr/toastr.min.js"></script><!-- scripit init-->
+    <script src="assets/js/lib/toastr/toastr.init.js"></script><!-- scripit init-->	
+    
+	<script src="assets/js/scripts.js"></script>
+	<!-- scripit init-->
+
+
+	<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+	<script type="text/javascript"
+		src="./assets/components/wangEditor/wangEditor.min.js"></script>
+		
+   <script src="assets/js/path.js?t=1231"></script>
+   <script src="assets/js/utils/common_util.js?t=1231"></script>
+   <script src="assets/js/do_doc.js?t=12311"></script>
+
+	<script>
+		var E = window.wangEditor
+		var editor = new E('#input-doc-content')
+		// 或者 var editor = new E( document.getElementById('editor') )
+
+		// 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
+		editor.customConfig.uploadImgShowBase64 = true; // 使用 base64 保存图片
+		editor.customConfig.uploadImgServer = '/api/sdo/file/upload/image'; // 上传图片到服务器  设置之后才能复制粘贴 图片 
+		editor.customConfig.uploadFileName = 'imgFile'
+		editor.create()
+
+		var DATA = null;
+		var ACTIVE_SERVICE = null;
+		$(function() {
+			console.log("=========>")
+			Doc.init();
+			$("#btn-doc-save").bind("click", function() {
+				var title = $("#input-doc-title").val();
+				if (!title) {
+					alert("标题不能为空呀!!!");
+				}
+				Doc.doSave(title, editor.txt.html());
+				//console.log(editor.txt.html())
+				//console.log(editor.txt.text())
+			});
+			
+		});
+	</script>
+
+</body>
+</html>
