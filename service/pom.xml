@@ -23,12 +23,22 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
-			<groupId>com.sandy</groupId>
-			<artifactId>authentication</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+		    <groupId>com.sandy</groupId>
+		    <artifactId>authentication</artifactId>
+		    <version>1.0.0-SNAPSHOT</version>
+		    <exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-data-redis</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -132,6 +142,7 @@
 				<configuration>
 					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
 					<jvmArguments>-Djava.security.egd=file:/dev/./urandom</jvmArguments>
+					<mainClass>com.sandy.doc.DocApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

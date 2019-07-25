@@ -61,10 +61,10 @@ public class DocController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Object doRecord(@RequestParam("title") String title,
-                           @RequestParam("content") String content, String parent) {
+                           @RequestParam("content") String content, String docId, String parent) {
         Assert.notEmpty(title);
         Assert.notEmpty(content);
-        docService.doSave(title, content, parent);
+        docService.doSave(title, content, parent, docId);
         return new ReqResult<>();
     }
 }

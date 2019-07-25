@@ -59,7 +59,7 @@
 
 <body>
 
-<!-- 等候 -->
+<!-- 等待条 -->
 <span class="ms-loading ms-loading-first"></span>
 <span class="ms-loading ms-loading-second"></span>
 
@@ -69,7 +69,7 @@
                 <ul id="sidebar-menu">
 					<li class="label">Main</li>
                     <li class="active"><a href="index.html"><i class="ti-home"></i> Dashboard </a></li>	            
-                    <li><a href="app-profile.html"><i class="ti-user"></i> Profile</a></li>
+                    <li title="功能暂未开发"><a href="#"><i class="ti-user"></i> Profile</a></li>
 					<li class="label">Document</li>
                 </ul>
             </div>
@@ -81,11 +81,9 @@
 
     <div class="header">
         <div class="pull-left">
-            <div class="logo" id="sideLogo">
-                <a href="index.html">
+            <div class="logo" id="sideLogo" >
+                <a href="index.html" style="color:#fff;">
                 	S do
-                   <!--  <img class="full-logo" src="assets/images/logo-big.png" alt="SimDahs">
-                    <img class="small-logo" src="assets/images/logo-small.png" alt="SimDahs"> -->
                 </a>
             </div>
             <div class="hamburger sidebar-toggle">
@@ -177,7 +175,9 @@
                     <div class="col-lg-2 p-0">
                         <div class="page-header">
                             <div class="page-title">
-                                <h1><a href="./new.html" target="_blank"><i class="ti-plus"></i></a></h1>
+                                <h1><a href="./new.html" target="_blank" style="color:#f96332;" title="创建新文档">
+                                		<i class="ti-plus"></i></a>
+                                </h1>
                             </div>
                         </div>
                     </div><!-- /# column -->
@@ -196,7 +196,8 @@
 						<div class="col-lg-12">
 							<div class="card alert">
 								<div class="card-header">
-									<h4 id="doc-info-title"></h4>
+									<h4 id="doc-info-title"></h4>  &nbsp; 
+									<a href="./new.html" target="_blank" style="color:#f96332;" title="编辑" id="doc-info-edit"><i class="ti-pencil-alt"></i></a>
 									<div class="card-header-right-icon">
 										<span id="doc-info-time"></span>
 									</div>
@@ -223,7 +224,7 @@
 								<div class="doc-remarks">
 									 <div class="form-group">
                                         <label>不说点啥再走么</label>
-                                        <textarea class="form-control" rows="3" placeholder="不留个爪？"  style="resize: vertical;"></textarea>
+                                        <textarea class="form-control" placeholder="不留个爪？"  style="resize: vertical;"></textarea>
                                     </div>
 								</div>
 							</div>
@@ -234,8 +235,8 @@
 			</div>
 						
 		</div>	
-     <!-- /# main content -->More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - 
-     	Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+     <!-- /# main content -->	Developed by Sandy - Collect from <a href="http://demo.cssmoban.com/cssthemes6/fish_34_vuejsadmin_simdash/index.html" target="_blank"
+			title="模板之家">SimDash</a>
             <!-- /# container-fluid -->
         </div><!-- /# main -->
     </div><!-- /# content wrap -->
@@ -250,6 +251,7 @@
 
     <script src="assets/js/scripts.js"></script><!-- scripit init-->
    <script src="assets/js/path.js?t=1231"></script>
+   <script src="assets/js/utils/url_util.js?t=1231"></script>
    <script src="assets/js/utils/common_util.js?t=1231"></script>
    <script src="assets/js/index.js?t=1231"></script>
 

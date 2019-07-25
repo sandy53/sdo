@@ -107,6 +107,11 @@ body{
     z-index: 9999;
     text-align: right;
 }
+
+#btn-doc-save{
+	padding-left: 25px;
+	padding-right: 25px;
+}
 </style>
 
 </head>
@@ -116,9 +121,7 @@ body{
 	<div class="header">
 		<div class="pull-left">
 			<div class="logo" id="sideLogo">
-				<a href="index.html"> S do <!--  <img class="full-logo" src="assets/images/logo-big.png" alt="SimDahs">
-                    <img class="small-logo" src="assets/images/logo-small.png" alt="SimDahs"> -->
-				</a>
+				<a href="index.html" style="color:#fff;"> S do</a>
 			</div>
 		</div>
 		<div class="pull-right p-r-15">
@@ -206,9 +209,11 @@ body{
 							<div class="card alert">
 								<div class="card-header">
 									<ol class="breadcrumb text-left">
-	                                    <li class="root"><a href="javascript:void(0);">Document</a></li>
+	                                    <li class="root" id="toIndex"><a href="javascript:void(0);">Document</a></li>
 	                                </ol>
 									<div class="form-group">
+									    <input type="hidden" id="input-doc-parent" value="">
+										<input type="hidden" id="input-doc-id" value="">
 										<input type="text" id="input-doc-title"
 											class="form-control input-focus" placeholder="这里需要一个吊炸天的标题" >
 									</div>
@@ -219,38 +224,23 @@ body{
 										<!-- 内容 -->
 									</div>
 								</div>
-								<!-- <div class="card-header-right-icon">
-										<ul>
-											<li class="card-close">
-												<button type="button" class="btn btn-primary btn-flat m-b-10 m-l-5">Primary</button>
-											</li> 
-										</ul>
-									</div> -->
 							</div>
 						</div>
 						<!-- /# column -->
 					</div>
 					<!-- /# row -->
-
-
-					
-	
-
 				</div>
 			</div>
-
 		</div>
-		
 		<div class="doc-update-footer">
-						<button type="button" id="btn-doc-save" class="btn btn-primary btn-flat m-b-10 m-l-5">&nbsp;Save&nbsp;</button>
+						<button type="button" id="btn-doc-save" class="btn btn-primary btn-flat m-b-10 m-l-5">保存</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn  btn-flat m-b-10 m-l-5">取消</button>
 		</div>
 		
 		<!-- /# main content -->
-		More Templates <a href="http://www.cssmoban.com/" target="_blank"
-			title="模板之家">模板之家</a> - Collect from <a
-			href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+		Developed by Sandy - Collect from <a href="http://demo.cssmoban.com/cssthemes6/fish_34_vuejsadmin_simdash/index.html" target="_blank"
+			title="模板之家">SimDash</a>
 		<!-- /# container-fluid -->
 	</div>
 	<!-- /# main -->
@@ -261,8 +251,7 @@ body{
 	<script src="assets/js/lib/jquery.min.js"></script>
 	<!-- jquery vendor -->
 	<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
-	<!-- nano scroller -->
-	<script src="assets/js/lib/sidebar.js"></script>
+
 	<!-- sidebar -->
 	<script src="assets/js/lib/bootstrap.min.js"></script>
 	<!-- bootstrap -->
@@ -280,6 +269,7 @@ body{
 		src="./assets/components/wangEditor/wangEditor.min.js"></script>
 		
    <script src="assets/js/path.js?t=1231"></script>
+   <script src="assets/js/utils/url_util.js?t=1231"></script>
    <script src="assets/js/utils/common_util.js?t=1231"></script>
    <script src="assets/js/do_doc.js?t=12311"></script>
 

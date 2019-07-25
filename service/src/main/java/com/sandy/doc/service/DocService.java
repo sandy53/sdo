@@ -18,7 +18,7 @@ public interface DocService {
      * @param title
      * @param content
      */
-    void doSave(String title, String content, String parent);
+    void doSave(String title, String content, String parent, String docId);
 
     void doQuery(RecordQuery query);
 

@@ -93,7 +93,6 @@ var commonUtil = {
 		param.limitNum = 500;
 		commonUtil.loading(true);
 		var token = localStorage.getItem('token');
-		console.log(token)
 		path &&
 		$.ajax({
 			type : path.method ?  path.method : "GET",
@@ -114,7 +113,10 @@ var commonUtil = {
 				commonUtil.loading(false);
 				console.log(e);
 				if(e.status == 401){
-					 //location.href="/login.html";
+					//commonUtil.msg("请先登陆！");
+					setTimeout(() => {
+						 location.href="/login.html";
+					}, 1000);
 					 return;
 				}else if(e.status == 403){
 					commonUtil.msg("无权限访问资源！");

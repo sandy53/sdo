@@ -1,7 +1,5 @@
 package com.sandy.doc;
 
-import javax.annotation.Resource;
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +11,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.sandy.auth.registry.annotation.EnableAuthentication;
-import com.sandy.auth.simple.redis.RedisAuthInterceptor;
 import com.sandy.common.redis.RedisUtil;
 
 @MapperScan(basePackages = { "com.sandy.record.dao", "com.sandy.user.dao" })
@@ -22,8 +19,6 @@ import com.sandy.common.redis.RedisUtil;
 @SpringBootApplication(scanBasePackages = { "com.sandy" })
 public class DocApplication {
 
-    @Resource
-    private RedisAuthInterceptor redisAuthInterceptor;
 
     public static void main(String[] args) {
         SpringApplication.run(DocApplication.class, args);

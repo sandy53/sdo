@@ -16,7 +16,7 @@ public class Doc extends RecordBase implements Serializable {
     @Genernate(value = "docId", desc = "文档编码")
     private String  docId;
     @Genernate(value = "ucode", desc = "用户编码")
-    private String  ucode;
+    private Integer           ucode;
     @Genernate(value = "title", desc = "标题")
     private String            title;
 
@@ -44,11 +44,11 @@ public class Doc extends RecordBase implements Serializable {
         this.docId = docId;
     }
 
-    public String getUcode() {
+    public Integer getUcode() {
         return ucode;
     }
 
-    public void setUcode(String ucode) {
+    public void setUcode(Integer ucode) {
         this.ucode = ucode;
     }
 

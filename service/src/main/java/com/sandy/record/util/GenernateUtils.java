@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
-import com.sandy.doc.model.Files;
+import com.sandy.doc.model.DocLog;
 
 /**
  *  初始化生成工具类
@@ -21,7 +21,7 @@ public final class GenernateUtils {
         Arrays.asList("serialVersionUID"));
 
     public static void main(String[] args) {
-        genernateBase(Files.class);
+        genernateBase(DocLog.class);
     }
 
     public static void genernateBase(List<Class<?>> clzs) {
