@@ -5,7 +5,8 @@ var Index = {
 	init : function(){
 		var that =this;
 		commonUtil.http(Path.docList, {}, function(data){
-			console.log(data);
+			var email = localStorage.getItem('email');
+			email && $("#user-email").text(email.substring(0, email.indexOf("@")));
 			that.renderDocOfMenu(data.results, $("#sidebar-menu"));
 		});
 	},

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>S do : do login</title>
+	
+	<!-- ================= Favicon ================== -->
+    <!-- Standard -->
+    <!-- <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff"> -->
+
+	
+	<!-- Styles -->
+    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/lib/toastr/toastr.min.css" rel="stylesheet">
+    <link href="assets/css/lib/simdahs.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-primary">
+
+	<div class="unix-login">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-lg-offset-3">
+					<div class="login-content">
+						<div class="login-logo">
+							<a href="index.html"><span>S do</span></a>
+						</div>
+						<div class="login-form"> <!--  login-form  --> 
+								<div class="form-group">
+									<label>Email address</label>
+									<input type="email" id="login-email" class="form-control" placeholder="回车获取验证码">
+								</div>
+								<div class="form-group">
+									<label>Verification Code</label>
+									<input type="text" id="login-vcode" class="form-control" placeholder="Verification Code">
+								</div>
+								<button type="button" id="btn-login" class="btn btn-primary btn-flat m-b-30 m-t-30">登陆</button>
+								<!-- <div class="social-login-content">
+									<div class="social-button">
+										<button type="button" class="btn btn-primary bg-facebook btn-flat btn-addon m-b-10"><i class="ti-facebook"></i>Sign in with facebook</button>
+										<button type="button" class="btn btn-primary bg-twitter btn-flat btn-addon m-t-10"><i class="ti-twitter"></i>Sign in with twitter</button>
+									</div>
+								</div>
+								<div class="register-link m-t-15 text-center">
+									<p>Don't have account ? <a href="page-register.html"> Sign Up Here</a></p>
+								</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<script src="assets/js/lib/jquery.min.js"></script>
+	<!-- jquery vendor -->
+	<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+
+	<!-- sidebar -->
+	<script src="assets/js/lib/bootstrap.min.js"></script>
+	<!-- bootstrap -->
+	<script src="assets/js/lib/mmc-common.js"></script>
+
+
+	<script src="assets/js/lib/toastr/toastr.min.js"></script><!-- scripit init-->
+    <script src="assets/js/lib/toastr/toastr.init.js"></script><!-- scripit init-->
+   <script src="assets/js/path.js?t=1231"></script>
+   <script src="assets/js/utils/common_util.js?t=1231"></script>
+   <script src="assets/js/login.js?t=123121231"></script>
+
+
+	<script>
+		$(function() {
+			Login.init();
+		});
+   </script>
+
+</body>
+
+</html>

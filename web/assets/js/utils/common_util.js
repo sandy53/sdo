@@ -92,13 +92,15 @@ var commonUtil = {
 		}
 		param.limitNum = 500;
 		commonUtil.loading(true);
+		var token = localStorage.getItem('token');
+		console.log(token)
 		path &&
 		$.ajax({
 			type : path.method ?  path.method : "GET",
 			url : path.url,
 			data : param,
 			beforeSend: function(request) {
-				//token && request.setRequestHeader("Authorization", token);
+				token && request.setRequestHeader("Authorization", token);
             },
 			success : function(data) {
 				commonUtil.loading(false);
@@ -111,6 +113,14 @@ var commonUtil = {
 			error : function(e){
 				commonUtil.loading(false);
 				console.log(e);
+				if(e.status == 401){
+					 //location.href="/login.html";
+					 return;
+				}else if(e.status == 403){
+					commonUtil.msg("无权限访问资源！");
+					return;
+				}
+				commonUtil.msg("网络请求失败，服务或在升级中！");
 				//callback(e);
 			}
 		});

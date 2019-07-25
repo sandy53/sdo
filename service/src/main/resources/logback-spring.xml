@@ -34,7 +34,7 @@
 	<logger name="com.zaxxer" level="ERROR" />
 	<logger name="com.ms" level="DEBUG" />
 	<logger name="org.mybatis" level="DEBUG" />
-	<logger name="org.springframework" level="INFO" />
+	<logger name="org.springframework" level="DEBUG" />
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="io.undertow.request" level="WARN" />
 	<logger name="io.lettuce" level="WARN" />

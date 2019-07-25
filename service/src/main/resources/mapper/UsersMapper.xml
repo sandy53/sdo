@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sandy.user.dao.UsersMapper">
+	
+	
+	<select id="selectByEmail" resultType="com.sandy.user.model.Users" parameterType="java.lang.String">
+	    SELECT ucode, email, nick_name nickName FROM sdo_users WHERE email = #{email}  AND deleted = 0
+	</select>
+	<insert id="insert" parameterType="com.sandy.user.model.Users">
+		INSERT INTO `sdo_users` (ucode, email, nick_name, create_time)
+		VALUES (#{ucode}, #{email}, #{nickName}, #{createTime});
+	</insert>
+</mapper>

@@ -248,52 +248,7 @@ public final class RedisUtil<T> {
     }
 
 
-    /**
-     *   hash添加，  添加超时功能
-     * 
-     * @param redisKey
-     * @param key
-     * @param value
-     * @param seconds   超时秒数
-     */
-    public void hashTimeOut(RedisKey redisKey, Object key, T value, long seconds) {
-        Assert.notNull(redisKey);
-        Assert.notNull(key);
-        Assert.notNull(value);
-        String hashKey = String.valueOf(key);
-        this.hash(redisKey, hashKey, value);
-        //超时时间
-        String timeoutKey = redisKey.getTimeoutKey();
-        if (timeoutKey != null) {
-            long timeout = System.currentTimeMillis() + (seconds * 1000);
-            redisTemplate.opsForHash().put(redisKey.getTimeoutKey(), hashKey, timeout);
-        }
-    }
 
-    /**
-     *  hash取出  添加超时功能
-     * 
-     * @param redisKey
-     * @param key
-     * @return
-     */
-    public Object hashTimeOut(RedisKey redisKey, Object key) {
-        Assert.notNull(redisKey);
-        Assert.notNull(key);
-        String hashKey = String.valueOf(key);
-        String timeoutKey = redisKey.getTimeoutKey();
-        //超时
-        if (timeoutKey != null) {
-            Object timeout = hashTemplate.get(timeoutKey, hashKey);
-            if (timeout == null || !(timeout instanceof Long)
-                || System.currentTimeMillis() > (Long) timeout) {
-                hashDelete(redisKey, hashKey);
-                hashDelete(timeoutKey, hashKey);
-                return null;
-            }
-        }
-        return hashTemplate.get(redisKey.getKey(), hashKey);
-    }
 
     //  redis 消息  ---------------------------------------------------------- START ------------------------------------
 

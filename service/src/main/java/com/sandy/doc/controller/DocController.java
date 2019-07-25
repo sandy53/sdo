@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sandy.auth.core.AbstractAuthInterceptor.Operator;
+import com.sandy.auth.simple.redis.RedisAuthInterceptor;
 import com.sandy.common.Assert;
 import com.sandy.common.model.ReqResult;
 import com.sandy.doc.service.DocService;
@@ -28,12 +30,17 @@ import com.sandy.record.model.RecordQuery.Condition;
 @RestController
 @RequestMapping("/doc")
 public class DocController {
+    @Resource
+    private RedisAuthInterceptor redisAuthInterceptor;
+    @Resource
+    private Operator             operator;
 
     @Resource
     private DocService docService;
 
     @RequestMapping("/list")
     public ReqResult<RecordQuery> doQuery(Paging paging, String parent) {
+        System.err.println(operator.userIdOrNull());
         RecordQuery query = new RecordQuery(RecordEnum.Doc.name(), paging);
         List<Condition> conditions = new ArrayList<>();
         Condition condition = new Condition();

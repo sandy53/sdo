@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sandy.auth.core.annotation.AuthAnonymous;
 import com.sandy.common.util.BASE64ImageUtil;
 import com.sandy.doc.enums.UploadType;
 import com.sandy.doc.model.Files;
@@ -90,6 +91,7 @@ public class FileController {
      * @param uploadType 
      * @return
      */
+    @AuthAnonymous
     @RequestMapping(value = "/upload/image", method = RequestMethod.POST)
     @ResponseBody
     public Object doUpload(@RequestParam(value = "imgFile", required = true) MultipartFile[] images,

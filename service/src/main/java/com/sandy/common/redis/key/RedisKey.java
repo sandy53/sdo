@@ -77,11 +77,4 @@ public interface RedisKey {
      */
     String getKey();
 
-    /**
-     * 获取实际值对应的 超时值
-     * 
-     * @return
-     */
-    String getTimeoutKey();
-
 }
