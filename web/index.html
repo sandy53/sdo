@@ -84,6 +84,45 @@
 		}
 		
 
+	/** 详情表格 */
+	#doc-content table{
+		background-color: transparent;
+	    border-spacing: 0;
+    	border-collapse: collapse;
+        width: 100%;
+    	max-width: 100%;
+    	margin-bottom: 20px;
+    	border: 1px solid #ddd;
+	}
+	
+	#doc-content	tbody {
+	    display: table-row-group;
+	    vertical-align: middle;
+	    border-color: inherit;
+	}
+	
+	#doc-content	tr {
+		display: table-row;
+    	vertical-align: inherit;
+    	border-color: inherit;
+	}
+	
+	#doc-content tbody tr th {
+	    color: #878787;
+	    font-family: "Quicksand", sans-serif;
+	    font-weight: bold;
+	    text-align: left;
+	}
+	
+	#doc-content table >tbody>tr>td, 
+	#doc-content table >tbody>tr>th,
+	 #doc-content table >tfoot>tr>td, 
+	 #doc-content table >tfoot>tr>th, 
+	 #doc-content table >thead>tr>td, 
+	 #doc-content table >thead>tr>th {
+    	border: 1px solid #ddd;
+    	padding: 8px;
+	}
 
     </style>
 
@@ -227,7 +266,6 @@
 							<div class="card alert">
 								<div class="card-header">
 									<h4 id="doc-info-title"></h4>  &nbsp; 
-									<span id="doc-info-time"></span>
 									<div class="card-header-right-icon">
 										<ul>
 											<li class="doc-lock doc-unlock" title="未锁定"><i class="ti-unlock"></i></li> 
@@ -238,11 +276,14 @@
 										</ul>
 									</div>
 								</div>
-								<div id="doc-content">
+								<div id="doc-content" >
 									
 								</div>
+								<div class="text-right"><span id="doc-info-time"></span></div>
 							</div>
+							
 						</div><!-- /# column -->
+						
                     </div><!-- /# row -->
 
                     <!-- row for remarks -->
