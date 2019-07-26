@@ -60,6 +60,7 @@ var Doc = {
 		Doc.input.id.val(doc.docId);
 		Doc.input.title.val(doc.title);
 		editor.txt.html(doc.detail.content);
+		$(".doc-move").hide();
 	},
 	  //复制初始化
 	initCopy :() => {
@@ -71,6 +72,7 @@ var Doc = {
 		Doc.input.id.empty();
 		Doc.input.title.val(doc.title + "      复制");
 		editor.txt.html(doc.detail.content);
+		$(".doc-move").hide();
 	},
 	  //移动初始化
 	initMove :() => {
@@ -82,6 +84,7 @@ var Doc = {
 		Doc.input.id.val(doc.docId);
 		Doc.input.title.val(doc.title);
 		editor.txt.html(doc.detail.content);
+		$(".doc-move").show();
 	},
     
     
