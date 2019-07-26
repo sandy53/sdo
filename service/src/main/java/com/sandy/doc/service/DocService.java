@@ -2,6 +2,7 @@ package com.sandy.doc.service;
 
 import java.util.Map;
 
+import com.sandy.doc.model.Doc;
 import com.sandy.record.model.RecordQuery;
 
 /**
@@ -18,7 +19,7 @@ public interface DocService {
      * @param title
      * @param content
      */
-    void doSave(String title, String content, String parent, String docId);
+    void doSave(Doc doc);
 
     void doQuery(RecordQuery query);
 

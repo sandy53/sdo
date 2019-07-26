@@ -41,7 +41,7 @@ public final class EmailUtil {
     /**
      *  发送邮箱密码
      */
-    private static String PASS     = "Pan123456";
+    private static String PASS     = "xxxxx";
 
 
     /**

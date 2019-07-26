@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sandy.auth.core.AbstractAuthInterceptor.Operator;
 import com.sandy.auth.simple.redis.RedisAuthInterceptor;
-import com.sandy.common.Assert;
 import com.sandy.common.model.ReqResult;
+import com.sandy.doc.model.Doc;
 import com.sandy.doc.service.DocService;
 import com.sandy.record.enums.RecordEnum;
 import com.sandy.record.model.Paging;
@@ -60,11 +60,14 @@ public class DocController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Object doRecord(@RequestParam("title") String title,
-                           @RequestParam("content") String content, String docId, String parent) {
-        Assert.notEmpty(title);
-        Assert.notEmpty(content);
-        docService.doSave(title, content, parent, docId);
-        return new ReqResult<>();
+    public Object doRecord(String title, String content, String docId, String parent) {
+        Doc doc = new Doc();
+        doc.setTitle(title);
+        doc.setContent(content);
+        doc.setDocId(docId);
+        doc.setParent(parent);
+        docService.doSave(doc);
+
+        return new ReqResult<>(doc);
     }
 }

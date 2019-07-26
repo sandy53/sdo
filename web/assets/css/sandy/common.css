@@ -38,3 +38,13 @@
 		99% {left: 99%;}
 		100% {left : 99.1%; opacity:0.1;}
 	}
+
+	
+	
+	
+	/** 登陆 */
+	#loginModal .modal-dialog{
+		width: 20%;
+		min-width: 300px;
+	}
+		

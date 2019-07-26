@@ -1,82 +1,153 @@
 /** 文档操作 */
 
 var path = {url : "/api/sdo/doc/save", method: "POST"};
+
+
 var Doc = {
+	input : {
+		parent : $("#input-doc-parent"),
+		id : $("#input-doc-id"),
+		title : $("#input-doc-title"),
+		content : $("#input-doc-content"),
+	},
     init : function (){
     	var that = this;
     	that.bindEvent();
-    	var docId = UrlUtil.fetchParamV("doc");
-		docId && that.doInfo(docId);
-		var parents = that.fetchParents();
-		parents && that.renderBreadcrumb(parents);
+    	
     },
     bindEvent :function(){
     	var that = this;
-    	$("#toIndex").bind("click", function(){
-    		localStorage.setItem('active-info', null);
-    		location.href="/index.html";
-    	});
-    },
-    renderBreadcrumb : function(parents, currentId){
-    	var that = this;
-    	var breadcrumb = $(".breadcrumb");
-    	breadcrumb.find(".item").remove();
-    	var newParents = [];
-    	parents && $(parents).each(function(index, item){
-    		newParents.push(item);
-    		$(`<li class="item" data-id="${item.id}"><a href="javascript:void(0);"> ${item.title}</a></li>`)
-    		.bind("click", function(){
-    			var id = $(this).data("id");
-    			var tempParents = that.fetchParents();
-    			tempParents && that.renderBreadcrumb(tempParents, id);
-    		}).appendTo(breadcrumb);
-    		if(currentId == item.id){
-    			return false;
-    		}
+    	$(".doc-info-opt").bind("click", function(){
+			var code = $(this).data("code");
+			code && that.infoOpt(code);
 		});
-    	if(newParents.length >0){
-    		$("#input-doc-parent").val(newParents[newParents.length-1].id)
-    	}
-    	localStorage.setItem('active-info', JSON.stringify(newParents));
+    	$("#btn-doc-cancel").bind("click", ()=>{
+    		that.doCancel();
+    	});
+    	
     },
-    fetchParents : function (){
+    //对详情的操作
+    infoOpt  : function(code){
     	var that = this;
-    	var json = localStorage.getItem('active-info');
-    	if(!json){
-    		return;
+    	ACTIVE_OPT = code;
+    	switch (code) {
+			case "new":
+				that.clear();
+				break;
+			case "edit":
+				that.initEdit();
+				break;
+			case "copy":
+				that.initCopy();
+				break;
+			case "move":
+				that.initMove();
+				break;
+			default:
+				return false;
+		}
+    	//切换页面
+    	that.optRender(true);
+    },
+    //编辑初始化
+    initEdit :() => {
+		var that = this;
+		var doc = ACTIVE_DOC;
+		if(!doc){
+			return false;
+		}
+		Doc.input.parent.empty();
+		Doc.input.id.val(doc.docId);
+		Doc.input.title.val(doc.title);
+		editor.txt.html(doc.detail.content);
+	},
+	  //复制初始化
+	initCopy :() => {
+		var that = this;
+		var doc = ACTIVE_DOC;
+		if(!doc){
+			return false;
+		}
+		Doc.input.id.empty();
+		Doc.input.title.val(doc.title + "      复制");
+		editor.txt.html(doc.detail.content);
+	},
+	  //移动初始化
+	initMove :() => {
+		var that = this;
+		var doc = ACTIVE_DOC;
+		if(!doc){
+			return false;
+		}
+		Doc.input.id.val(doc.docId);
+		Doc.input.title.val(doc.title);
+		editor.txt.html(doc.detail.content);
+	},
+    
+    
+    //清空编辑器
+    clear : function (){
+    	var that = this;
+    	//不会清除上级文档信息
+    	$(".input-doc-item").empty();
+    	Doc.input.title.val("");
+    	editor.txt.html("");
+    },
+    //元素切换
+    optRender : function (showEidt){
+    	var that = this;
+    	if(showEidt){
+    		$(".doc-info-item").hide();
+    		$(".doc-update-item").show();
+    	}else{
+    		$(".doc-info-item").show();
+    		$(".doc-update-item").hide();
     	}
-    	return JSON.parse(json);
     },
 	//保存
 	doSave : function(title, content){
 		var that = this;
-		var parents = that.fetchParents();
-		console.log(parents)
-		var parent = '';
-		if(parents && parents.length > 0){
-			parent = parents[0].id;
+		var parent = Doc.input.parent.val();
+		var param =  {title:title, content:content, parent : Doc.input.parent.val(), docId: Doc.input.id.val()};
+		if( ACTIVE_OPT == 'new'){
+			param.parent = param.docId ;  //新增的时候当前活动文档就是新文档的父文档
+			param.docId = null;  
+		}else if(ACTIVE_OPT == 'edit'){
+			param.parent = null;
+		}else if(ACTIVE_OPT == 'copy'){
+			param.docId = null; 
+		}else if(ACTIVE_OPT == 'move'){
+			param.title = null; 
+			param.content = null; 
 		}
-		var docId = $("#input-doc-id").val();
-		commonUtil.http(path, {parent: parent, title:title, content:content, docId: docId}, function(data){
+		console.log(param)
+		//return;
+		commonUtil.http(path, param, function(data){
 			commonUtil.msg("保存成功");
-			$("#btn-doc-save").remove();
+			Doc.optRender(false);
+			if(ACTIVE_OPT == 'move'){
+				$("#doc-info-title").text(title);
+				$("#doc-content").html(content);
+			}else{
+				$("#doc-info-title").text(data.title);
+				$("#doc-info-time").text(commonUtil.time(data.createTime));
+				$("#doc-content").html(data.content);
+			}
+			ACTIVE_OPT = null;
+			Doc.clear();
 		});
 	},
-	//详情
-	doInfo : function (docId){
-		var that =this;
-		commonUtil.http(Path.docInfo, {id: docId}, function(data){
-			if(!data){
-				console.log(data);
-				return false;
-			}
-			$("#input-doc-title").val(data.title);
-			$("#input-doc-id").val(data.docId);
-			$("#btn-doc-save").text("修改");
-			editor.txt.html(data.detail.content);
-			
-			
-		});
+	//取消提醒
+	doCancel : () =>{
+		var that = this;
+		if(confirm("正在编辑， 取消后不可恢复?")){
+			Doc.clear();
+			Doc.optRender(false);
+			ACTIVE_OPT = null;
+			return true;
+		}else{
+			return false;
+		}
 	},
 
 }

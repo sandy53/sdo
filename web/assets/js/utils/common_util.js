@@ -113,10 +113,8 @@ var commonUtil = {
 				commonUtil.loading(false);
 				console.log(e);
 				if(e.status == 401){
-					//commonUtil.msg("请先登陆！");
-					setTimeout(() => {
-						 location.href="/login.html";
-					}, 1000);
+					 commonUtil.msg("请先登陆！");
+					 commonUtil.showLogin();
 					 return;
 				}else if(e.status == 403){
 					commonUtil.msg("无权限访问资源！");
@@ -162,7 +160,7 @@ var commonUtil = {
 				param.eCallback && param.eCallback.call(that);
 				if(e.status == 401){
 					commonUtil.initLogin();
-					commonUtil.msg("验证失败，请重新登陆！");
+					//commonUtil.msg("验证失败，请重新登陆！");
 					return;
 				}
 				if(e.status == 503){
@@ -612,31 +610,18 @@ var commonUtil = {
 		}, 1000);
 		 
 	},
-	pay : function (orderSn ){
-		var that = this;
-		orderSn && 
-		commonUtil.ajax.call(that, ApiConfig.paySumpay + orderSn, commonUtil.GET, null, function(data){
-			if(!data){
-				commonUtil.msg("生成支付参数异常！");
-				return;
-			}
-			if(data.resp_code != "000000"){
-				commonUtil.msg(data.resp_msg);
-				return;
-			}
-			commonUtil.modal(true, "订单支付", " ");
-			$("#ms-modal .modal-dialog").addClass("modal-pay");
-			$(`<a  class="opt-pay-item" href="${data.redirect_url}" target="_blank">支付单生成成功，点击跳转前往支付</a>`).appendTo($("#ms-modal .ms-modal-body")).on("click", function(){
-				commonUtil.modal();
-			});
-		});
-	},
 	time : function(timestamp) {
 		if (!timestamp)
 			return "";
 		var date = new Date(timestamp);
 		return date ? date.Format("yyyy-MM-dd hh:mm:ss") : "";
 	}, 
+	showLogin : function (){
+		setTimeout(() => {
+			$("#loginModal").modal({backdrop:'static', keyboard: false});
+			$("#login-email").focus();
+		}, 1000);
+	}
 
 };
 

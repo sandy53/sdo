@@ -29,8 +29,10 @@
     <link href="assets/css/lib/mmc-chat.css" rel="stylesheet" />
     <link href="assets/css/lib/sidebar.css" rel="stylesheet">
     <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/lib/toastr/toastr.min.css" rel="stylesheet">
     <link href="assets/css/lib/simdahs.css" rel="stylesheet">
     <link href="assets/css/sandy/common.css" rel="stylesheet">
+    <link href="assets/css/sandy/edit.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
 
     <style type="text/css">
@@ -44,6 +46,11 @@
 		.sidebar.sidebar-shrink ~ .content-wrap {
 			margin-left: 300px;
 		}
+		
+		/** wang edit*/
+[contenteditable]:hover, [contenteditable]:focus {
+	background: none;
+}
 
 		/** 业务 */
 
@@ -53,6 +60,17 @@
 			min-height: 200px;
 			border-top: 1px solid #eee;
 		}
+		
+		#doc-info-time{
+			margin-left: 50px;
+			font-size: 11px;
+		}
+		
+		
+	
+		
+
+
     </style>
 
 </head>
@@ -136,8 +154,6 @@
                                         </div>
                                     </a>
                                 </li> -->
-
-
                                 <li class="text-center">
                                     <a href="#" class="more-link">See All</a>
                                 </li>
@@ -175,8 +191,8 @@
                     <div class="col-lg-2 p-0">
                         <div class="page-header">
                             <div class="page-title">
-                                <h1><a href="./new.html" target="_blank" style="color:#f96332;" title="创建新文档">
-                                		<i class="ti-plus"></i></a>
+                                <h1><a class="doc-info-opt" data-code="new" href="javascript:void(0);"style="color:#f96332;" title="创建新文档">
+                                		 <i class="ti-plus"></i></a>
                                 </h1>
                             </div>
                         </div>
@@ -192,14 +208,19 @@
                     </div><!-- /# column -->
                 </div><!-- /# row -->
                 <div class="main-content">
-					<div class="row"> 
+					<div class="row doc-info-item"> 
 						<div class="col-lg-12">
 							<div class="card alert">
 								<div class="card-header">
 									<h4 id="doc-info-title"></h4>  &nbsp; 
-									<a href="./new.html" target="_blank" style="color:#f96332;" title="编辑" id="doc-info-edit"><i class="ti-pencil-alt"></i></a>
+									<span id="doc-info-time"></span>
 									<div class="card-header-right-icon">
-										<span id="doc-info-time"></span>
+										<ul>
+										
+											<li class="doc-info-opt" data-code="move"  title="移动"><i class="ti-move"></i></li> 
+											<li class="doc-info-opt" data-code="copy"   title="复制"><i class="ti-files"></i></li> 
+											<li class="doc-info-opt" data-code="edit"   title="编辑"><i class="ti-pencil-alt"></i></li> 	
+										</ul>
 									</div>
 								</div>
 								<div id="doc-content">
@@ -210,16 +231,10 @@
                     </div><!-- /# row -->
 
                     <!-- row for remarks -->
-                    <div class="row"> 
+                    <div class="row  doc-info-item"> 
 						<div class="col-lg-12">
 							<div class="card alert">
 								<div class="card-header">
-									<!-- <h4>Earning Graph</h4>
-									<div class="card-header-right-icon">
-										<ul>
-											<li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li> 
-										</ul>
-									</div> -->
 								</div>
 								<div class="doc-remarks">
 									 <div class="form-group">
@@ -230,7 +245,39 @@
 							</div>
 						</div><!-- /# column -->
                     </div><!-- /# row -->
-
+                    
+                   <!-- 新增修改 -->
+                   <div class="row doc-update-item"> 
+						<div class="col-lg-12">
+							<div class="card alert">
+								<div class="card-header">
+									<div class="form-group">
+									    <input type="hidden" id="input-doc-parent" value="" >
+										<input type="hidden" id="input-doc-id" class="input-doc-item" value="">
+										<input type="text" id="input-doc-title" 
+											class="form-control input-focus input-doc-item" placeholder="这里需要一个吊炸天的标题" >
+									</div>
+									<div class="form-group">
+										<input type="text" id="input-doc-parent-title" 
+											class="form-control input-focus input-doc-item" readonly="readonly" placeholder="点击左侧目录确认要移动的位置" >
+									</div>
+								</div>
+									  
+								<div class="doc-content">
+									<div id="input-doc-content">
+										<!-- 内容 -->
+									</div>
+								</div>
+							</div>
+						</div><!-- /# column -->
+						<div class="doc-update-footer">
+							<button type="button" id="btn-doc-save" class="btn btn-primary btn-flat m-b-10 m-l-5">保存</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" id="btn-doc-cancel" class="btn  btn-flat m-b-10 m-l-5">取消</button>
+						</div>
+                    </div><!-- /# row -->
+                    
+                    
                 </div>
 			</div>
 						
@@ -239,8 +286,40 @@
 			title="模板之家">SimDash</a>
             <!-- /# container-fluid -->
         </div><!-- /# main -->
-    </div><!-- /# content wrap -->
+    <!-- /# content wrap -->
 	
+
+
+<!-- login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop=”static”>
+  <div class="modal-dialog" role="document" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+      </div>
+      <div class="modal-body">
+      	  <form class="form-horizontal">
+        	  <div class="form-group has-default has-feedback">
+                   <div class="row">
+						<div class="col-sm-12">
+							<input type="email" class="form-control" id="login-email" placeholder="回车获取验证码" title="回车获取验证码">
+							<span class="ti-email form-control-feedback"></span>
+						</div>
+					</div>
+              </div>
+              <div class="form-group has-default has-feedback">
+                   <div class="row">
+						<div class="col-sm-12">
+							<input type="text" class="form-control"  id="login-vcode"  placeholder="Verification Code" title="回车登陆">
+							<span class="ti-shortcode form-control-feedback"></span>
+						</div>
+					</div>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
 	
 	
     <script src="assets/js/lib/jquery.min.js"></script><!-- jquery vendor -->
@@ -249,16 +328,54 @@
     <script src="assets/js/lib/bootstrap.min.js"></script><!-- bootstrap -->
     <script src="assets/js/lib/mmc-common.js"></script>
 
+
+
+	<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+	<script type="text/javascript"
+		src="./assets/components/wangEditor/wangEditor.min.js"></script>
+		
+		
+	<script src="assets/js/lib/toastr/toastr.min.js"></script><!-- scripit init-->
+    <script src="assets/js/lib/toastr/toastr.init.js"></script><!-- scripit init-->
     <script src="assets/js/scripts.js"></script><!-- scripit init-->
    <script src="assets/js/path.js?t=1231"></script>
    <script src="assets/js/utils/url_util.js?t=1231"></script>
    <script src="assets/js/utils/common_util.js?t=1231"></script>
    <script src="assets/js/index.js?t=1231"></script>
+   <script src="assets/js/login.js?t=123121231"></script>
+   <script src="assets/js/do_doc.js?t=12311"></script>
 
 
 	<script>
+		//选择中的文档 
+		var ACTIVE_DOC = null;
+		var ACTIVE_OPT = null;
+	
+		var E = window.wangEditor
+		var editor = new E('#input-doc-content')
+		// 或者 var editor = new E( document.getElementById('editor') )
+	
+		// 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
+		editor.customConfig.uploadImgShowBase64 = true; // 使用 base64 保存图片
+		editor.customConfig.uploadImgServer = '/api/sdo/file/upload/image'; // 上传图片到服务器  设置之后才能复制粘贴 图片 
+		editor.customConfig.uploadFileName = 'imgFile'
+		editor.create();
+
+	
+	
 		$(function() {
 			Index.init();
+			Login.init();
+			Doc.init();
+			$("#btn-doc-save").bind("click", function() {
+				var title = $("#input-doc-title").val();
+				if (!title) {
+					alert("标题不能为空呀!!!");
+				}
+				Doc.doSave(title, editor.txt.html());
+				//console.log(editor.txt.html())
+				//console.log(editor.txt.text())
+			});
 		});
    </script>
 

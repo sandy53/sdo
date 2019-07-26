@@ -6,7 +6,6 @@ var Login = {
 		
 		init : function(){
 			var that= this;
-			
 			that.bindEvent();
 		},
 		bindEvent : function(){
@@ -26,13 +25,16 @@ var Login = {
 					}
 					commonUtil.http(Path.vcode, {email: email}, function (data){
 						commonUtil.msg("验证码已发送");
-					})
+						setTimeout(() => {
+							$("#login-vcode").focus();
+						}, 500);
+					});
 				}
 			});
-				
-			
-			
-			$("#btn-login").bind("click", function(){
+			$("#login-vcode").bind("keydown", function(event){
+				if(event.keyCode!=13){
+					return;
+				}
 				var email = $("#login-email").val();
 				var vcode = $("#login-vcode").val();
 				if(!email || !vcode){
@@ -47,12 +49,12 @@ var Login = {
 					if(data && data.access_token){
 						 localStorage.setItem('token', data.access_token);
 						 localStorage.setItem('email', email);
-						 location.href="/";
+						 commonUtil.msg("登陆成功");
+						 $("#loginModal").modal("hide");
 					}else{
 						commonUtil.msg("登陆失败");
 					}
 				})
-				
 			});
 		},
 		

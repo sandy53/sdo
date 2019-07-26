@@ -48,47 +48,98 @@ public class DocServiceImpl implements DocService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void doSave(String title, String content, String parent, String docId) {
+    public void doSave(Doc doc) {
 
-        if (StringUtils.isBlank(docId)) {
+        if (StringUtils.isBlank(doc.getDocId())) {
             //新增
-            this.doSave(title, content, parent);
+            this.doNew(doc);
+            return;
+        } else if (StringUtils.isNotBlank(doc.getDocId())
+                   && StringUtils.isNotBlank(doc.getParent())) {
+            //移动
+            this.doMove(doc);
             return;
         }
         //修改
+        this.doUpdate(doc);
+    }
+
+    private void doUpdate(Doc doc) {
+        Assert.notEmpty(doc.getDocId());
+        Assert.notEmpty(doc.getTitle());
+
         long updateTime = System.currentTimeMillis();
         RecordUpdate update = new RecordUpdate(RecordEnum.Doc);
-        update.addCondition("docId", parent);
-        update.addUpdateField("title", title);
+        update.addCondition("docId", doc.getDocId());
+        update.addUpdateField("title", doc.getTitle());
         update.addUpdateField("updateTime", updateTime);
         recordService.doUpdate(update);
 
         //修改内容
         update = new RecordUpdate(RecordEnum.DocContent);
-        update.addCondition("docId", parent);
-        update.addUpdateField("content", content);
+        update.addCondition("docId", doc.getDocId());
+        update.addUpdateField("content", doc.getContent());
         recordService.doUpdate(update);
 
 
         //保存日志
         //DocLog 
         DocLog log = new DocLog();
-        log.setDocId(docId);
+        log.setDocId(doc.getDocId());
         log.setRemarks("修改");
         log.setUcode(operator.fetchUserId());
         log.setCreateTime(updateTime);
         RecordSave recordSave = new RecordSave(RecordEnum.DocLog.name(), Arrays.asList(log));
         recordService.doSave(recordSave);
     }
+    private void doMove(Doc doc) {
+        Assert.notEmpty(doc.getDocId());
+        Assert.notEmpty(doc.getParent());
+        //先查父类
+        RecordOne one = new RecordOne(RecordEnum.Doc);
+        one.addCondition("docId", doc.getParent());
+        Map<String, Object> parentInfo = recordService.doOne(one);
+        if (parentInfo == null || parentInfo.isEmpty()) {
+            throw new RuningException(ResultCode.RECORD_NOT_EXIST);
+        }
 
-    private void doSave(String title, String content, String parent) {
-        this.parentUpdate(parent);
+        one = new RecordOne(RecordEnum.Doc);
+        one.addCondition("docId", doc.getDocId());
+        Map<String, Object> docInfo = recordService.doOne(one);
+        if (docInfo == null || docInfo.isEmpty()) {
+            throw new RuningException(ResultCode.RECORD_NOT_EXIST);
+        }
+        String newParent = parentInfo.get("docId").toString();
+        String docParent = docInfo.get("parent").toString();
+        if (StringUtils.equals(newParent, docParent)) {
+            //未移动操作
+            return;
+        }
+        //修改
+        long updateTime = System.currentTimeMillis();
+        RecordUpdate update = new RecordUpdate(RecordEnum.Doc);
+        update.addCondition("docId", doc.getDocId());
+        update.addUpdateField("parent", newParent);
+        update.addUpdateField("updateTime", updateTime);
+        recordService.doUpdate(update);
+        //日志
+        //保存日志
+        //DocLog 
+        DocLog log = new DocLog();
+        log.setDocId(doc.getDocId());
+        log.setRemarks("移动: " + docParent + " -> " + newParent);
+        log.setUcode(operator.fetchUserId());
+        log.setCreateTime(updateTime);
+        RecordSave recordSave = new RecordSave(RecordEnum.DocLog.name(), Arrays.asList(log));
+        recordService.doSave(recordSave);
+    }
+
+    private void doNew(Doc doc) {
+        Assert.notEmpty(doc.getTitle());
+        this.parentUpdate(doc.getParent());
         String docId = getDocId();
-        Doc doc = new Doc();
         doc.setDocId(docId);
-        doc.setTitle(title);
         doc.setLeaf(LEAF);
-        doc.setParent(parent);
         //TODO
         doc.setUcode(operator.fetchUserId());
         doc.setCreateTime(System.currentTimeMillis());
@@ -98,7 +149,7 @@ public class DocServiceImpl implements DocService {
         //保存内容
         DocContent docContent = new DocContent();
         docContent.setDocId(docId);
-        docContent.setContent(content);
+        docContent.setContent(doc.getContent());
         recordSave = new RecordSave(RecordEnum.DocContent.name(), Arrays.asList(docContent));
         recordService.doSave(recordSave);
 

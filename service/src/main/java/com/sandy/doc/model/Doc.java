@@ -28,6 +28,9 @@ public class Doc extends RecordBase implements Serializable {
 
     private Long    createTime;
 
+    //临时封装用
+    private String            content;
+
     public Integer getId() {
         return id;
     }
@@ -82,6 +85,14 @@ public class Doc extends RecordBase implements Serializable {
 
     public void setLeaf(Byte leaf) {
         this.leaf = leaf;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
 }
