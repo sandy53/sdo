@@ -18,11 +18,20 @@ public interface DocService {
      * 
      * @param title
      * @param content
+     * @throws Exception 
      */
-    void doSave(Doc doc);
+    void doSave(Doc doc) throws Exception;
 
     void doQuery(RecordQuery query);
 
     Map<String, Object> doInfo(String docId);
+
+    /**
+     * 锁定操作   锁定后只有当前用户可以操作
+     * 
+     * @param docId
+     * @throws Exception 
+     */
+    void doLock(String docId) throws Exception;
 
 }

@@ -25,7 +25,7 @@ var Index = {
 		var that =this;
 		$(results).each(function(index, doc){
 			if(doc.leaf){
-				$(`<li id="doc-menu-${doc.docId}" data-docid="${doc.docId}" data-title="${doc.title}"><a href="javascirpt:void(0);"><i class="ti-file"></i>${doc.title}</a></li>`)
+				$(`<li id="doc-menu-${doc.docId}" data-docid="${doc.docId}" data-title="${doc.title}"><a href="javascirpt:void(0);">${doc.title}</a></li>`)
 				.bind("click", function(){
 					that.docActive( doc, false);
 				}).appendTo(parent);
@@ -33,8 +33,7 @@ var Index = {
 				var li = $(`<li id="doc-menu-${doc.docId}" data-docid="${doc.docId}"  data-title="${doc.title}">
                 	<ul class="doc-subs"></ul>
             	</li>`);
-				li.appendTo(parent);
-				
+				li.appendTo(parent); //<i class="ti-folder"></i>
 				$(`<a class="sidebar-sub-toggle"><i class="ti-folder"></i>${doc.title}<span class="sidebar-collapse-icon ti-angle-down"></span></a>`)
             	.bind("click", function(){
             		var loaded = $(this).hasClass("loaded");
@@ -92,6 +91,21 @@ var Index = {
 			$("#doc-info-time").text(commonUtil.time(data.createTime));
 			$("#doc-content").html(data.detail.content);
 			ACTIVE_DOC = data;
+			//可操作按钮显示
+			var owner =  data.owner;
+			var locked =  data.locked;
+			if(owner || !locked){
+				//显示普通操作
+				$(".doc-info-opt").addClass("doc-info-opt-active");
+			}else{
+				$(".doc-info-opt").removeClass("doc-info-opt-active");
+			}
+			if(owner){
+				$(`.doc-${locked ? 'locked': 'unlock'}`).addClass("doc-lock-active");
+			}else{
+				$(`.doc-lock`).removeClass("doc-lock-active");
+			}
+			
 		});
 	},
 	//* 加载子文档列表 */

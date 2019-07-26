@@ -24,7 +24,12 @@ var Doc = {
     	$("#btn-doc-cancel").bind("click", ()=>{
     		that.doCancel();
     	});
-    	
+    	$(".doc-unlock").bind("click", ()=>{
+    		that.doLock('locked');
+    	});
+    	$(".doc-locked").bind("click", ()=>{
+    		that.doLock('unlock');
+    	});
     },
     //对详情的操作
     infoOpt  : function(code){
@@ -122,6 +127,10 @@ var Doc = {
 		}else if(ACTIVE_OPT == 'move'){
 			param.title = null; 
 			param.content = null; 
+			if(param.parent == param.docId){
+				commonUtil.msg("移动位置错误，重新选择!", true);
+				return;
+			}
 		}
 		console.log(param)
 		//return;
@@ -152,5 +161,16 @@ var Doc = {
 			return false;
 		}
 	},
+	//锁定
+	doLock : (code) =>{
+		var that = this;
+		console.log(code)
+		ACTIVE_DOC && 
+		commonUtil.http(Path.doLock, {docId: ACTIVE_DOC.docId}, function(data){
+			$(`.doc-lock`).removeClass("doc-lock-active");
+			$(`.doc-${code}`).addClass("doc-lock-active");
+		});
+	},
+	
 
 }

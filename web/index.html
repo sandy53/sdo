@@ -10,7 +10,7 @@
 	
 	<!-- ================= Favicon ================== -->
     <!-- Standard -->
-    <!-- <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff"> -->
+    <link rel="shortcut icon" href="./assets/images/favicon.ico">
     <!-- Retina iPad Touch Icon-->
     <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
     <!-- Retina iPhone Touch Icon-->
@@ -47,6 +47,16 @@
 			margin-left: 300px;
 		}
 		
+		.sidebar .nano-content > ul > li > ul > li > ul > li.active > a, 
+		.sidebar .nano-content > ul > li > ul > li > ul > li.open > a, 
+		.sidebar .nano-content > ul > li > ul > li > ul > li > ul {
+    	 	background: #fff; 
+		}
+		.sidebar i {
+    		font-size: 1.0em;
+    		margin-right: 0px;
+		}
+		
 		/** wang edit*/
 [contenteditable]:hover, [contenteditable]:focus {
 	background: none;
@@ -65,9 +75,13 @@
 			margin-left: 50px;
 			font-size: 11px;
 		}
+		.doc-lock, .doc-info-opt {
+			display: none !important;
+		}
 		
-		
-	
+		.doc-lock-active, .doc-info-opt-active {
+			display: inline-block !important;
+		}
 		
 
 
@@ -216,7 +230,8 @@
 									<span id="doc-info-time"></span>
 									<div class="card-header-right-icon">
 										<ul>
-										
+											<li class="doc-lock doc-unlock" title="未锁定"><i class="ti-unlock"></i></li> 
+											<li class="doc-lock doc-locked" title="锁定"><i class="ti-lock"></i></li> 
 											<li class="doc-info-opt" data-code="move"  title="移动"><i class="ti-move"></i></li> 
 											<li class="doc-info-opt" data-code="copy"   title="复制"><i class="ti-files"></i></li> 
 											<li class="doc-info-opt" data-code="edit"   title="编辑"><i class="ti-pencil-alt"></i></li> 	

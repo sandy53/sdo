@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sandy.auth.core.AbstractAuthInterceptor.Operator;
 import com.sandy.auth.simple.redis.RedisAuthInterceptor;
+import com.sandy.common.Assert;
 import com.sandy.common.model.ReqResult;
+import com.sandy.common.model.ResultCode;
 import com.sandy.doc.model.Doc;
 import com.sandy.doc.service.DocService;
 import com.sandy.record.enums.RecordEnum;
@@ -40,7 +42,6 @@ public class DocController {
 
     @RequestMapping("/list")
     public ReqResult<RecordQuery> doQuery(Paging paging, String parent) {
-        System.err.println(operator.userIdOrNull());
         RecordQuery query = new RecordQuery(RecordEnum.Doc.name(), paging);
         List<Condition> conditions = new ArrayList<>();
         Condition condition = new Condition();
@@ -56,6 +57,10 @@ public class DocController {
     @RequestMapping("/info")
     public Object doInfo(@RequestParam("id") String docId) {
         Map<String, Object> info = docService.doInfo(docId);
+        if (info != null) {
+            Object ucode = info.get("ucode");
+            info.put("owner", operator.fetchUserId() == Integer.parseInt(ucode.toString()));
+        }
         return new ReqResult<>(info);
     }
 
@@ -66,8 +71,23 @@ public class DocController {
         doc.setContent(content);
         doc.setDocId(docId);
         doc.setParent(parent);
-        docService.doSave(doc);
 
-        return new ReqResult<>(doc);
+        try {
+            docService.doSave(doc);
+            return new ReqResult<>(doc);
+        } catch (Exception e) {
+            return new ReqResult<>(ResultCode.FIELD, e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/lock", method = RequestMethod.POST)
+    public Object doLock(@RequestParam String docId) {
+        Assert.notEmpty(docId);
+        try {
+            docService.doLock(docId);
+            return new ReqResult<>();
+        } catch (Exception e) {
+            return new ReqResult<>(ResultCode.FIELD, e.getMessage());
+        }
     }
 }

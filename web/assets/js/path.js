@@ -7,6 +7,7 @@ var Path = {
 	docSave : new path( "/api/sdo/doc/save", "POST"),
 	vcode : new path( "/api/sdo/user/vcode"),
 	doLogin : new path( "/api/sdo/user/login/email", "POST"),
+	doLock :  new path( "/api/sdo/doc/lock", "POST"),
 }
 
 function path(url, method){

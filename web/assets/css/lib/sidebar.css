@@ -38,7 +38,7 @@
 .sidebar i {
     font-size: 1.12em;
     margin-right: 5px;
-    vertical-align: middle;
+   /*  vertical-align: middle;   remove by  sandy  20190726 */   
     width: 1.4em;
     display: inline-block;
 }
