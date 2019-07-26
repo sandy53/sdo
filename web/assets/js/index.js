@@ -38,6 +38,9 @@ var Index = {
 				$(`<a class="sidebar-sub-toggle"><i class="ti-folder"></i>${doc.title}<span class="sidebar-collapse-icon ti-angle-down"></span></a>`)
             	.bind("click", function(){
             		var loaded = $(this).hasClass("loaded");
+            		if(!loaded){
+            			 $(this).addClass("loaded");
+            		}
             		that.docActive( doc, !loaded);
             	}).prependTo(li);
 			}
