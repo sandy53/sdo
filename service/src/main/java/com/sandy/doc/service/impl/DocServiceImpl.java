@@ -126,6 +126,12 @@ public class DocServiceImpl implements DocService {
         RecordSave recordSave = new RecordSave(RecordEnum.DocLog.name(), Arrays.asList(log));
         recordService.doSave(recordSave);
     }
+
+    /**
+     * 移动
+     * 
+     * @param doc
+     */
     private void doMove(Doc doc) {
         Assert.notEmpty(doc.getDocId());
         Assert.notEmpty(doc.getParent());
@@ -155,6 +161,9 @@ public class DocServiceImpl implements DocService {
             //未移动操作
             return;
         }
+        //变更新的父节点为非叶子节点
+        this.parentUpdate(newParentId);
+
         //修改
         long updateTime = System.currentTimeMillis();
         RecordUpdate update = new RecordUpdate(RecordEnum.Doc);
