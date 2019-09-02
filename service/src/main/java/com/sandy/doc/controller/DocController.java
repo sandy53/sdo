@@ -66,13 +66,14 @@ public class DocController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Object doRecord(String title, String content, String docId, String parent) {
+    public Object doRecord(String title, String content, String docId, String parent,
+                           String spaceCode) {
         Doc doc = new Doc();
         doc.setTitle(title);
         doc.setContent(content);
         doc.setDocId(docId);
         doc.setParent(parent);
-
+        doc.setSpaceCode(spaceCode);
         try {
             docService.doSave(doc);
             return new ReqResult<>(doc);
