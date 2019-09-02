@@ -37,6 +37,7 @@ public class RecordSave extends RecordQS {
         super();
         this.recordCode = recordEnum.name();
     }
+
     public RecordSave(String recordCode, List<RecordBase> records) {
         super();
         this.recordCode = recordCode;

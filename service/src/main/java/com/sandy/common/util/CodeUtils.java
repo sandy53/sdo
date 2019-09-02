@@ -70,6 +70,8 @@ public final class CodeUtils {
      */
     public static final int        USER_PASSWORD              = 6;
 
+    private static final SnowflakeIdWorker idWorker                = new SnowflakeIdWorker(1, 0);
+
 	private CodeUtils() {
 
 	}
@@ -104,6 +106,14 @@ public final class CodeUtils {
         }
     }
 
+    /**
+     *  Twitter的雪花算法
+     * 
+     * @return
+     */
+    public static long getBySnowflake() {
+        return idWorker.nextId();
+    }
 
     /**
      * 获取指定长度(1位到9位)的随机数字字符串

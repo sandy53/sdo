@@ -15,6 +15,10 @@ public class Doc extends RecordBase implements Serializable {
     private Integer id;
     @Genernate(value = "docId", desc = "文档编码")
     private String  docId;
+
+    @Genernate(value = "space_code", desc = "文档空间编码")
+    private String            spaceCode;
+
     @Genernate(value = "ucode", desc = "用户编码")
     private Integer           ucode;
     @Genernate(value = "title", desc = "标题")
@@ -95,5 +99,12 @@ public class Doc extends RecordBase implements Serializable {
         this.content = content;
     }
 
+    public String getSpaceCode() {
+        return spaceCode;
+    }
+
+    public void setSpaceCode(String spaceCode) {
+        this.spaceCode = spaceCode;
+    }
 
 }

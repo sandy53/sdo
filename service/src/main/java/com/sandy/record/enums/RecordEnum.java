@@ -19,5 +19,7 @@ public enum RecordEnum {
                         /** 通用统计 */
                         GENERIC_COUNT,
                         /** 通用统计日志 */
-                        GENERIC_COUNT_LOG
+                        GENERIC_COUNT_LOG,
+
+                        Space
 }
