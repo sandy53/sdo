@@ -4,15 +4,12 @@ var Index = {
 
 	init : function(){
 		var that =this;
-		
+		var email = localStorage.getItem('email');
+		email && $("#user-email").text(email.substring(0, email.indexOf("@")));
+
 		var docId = UrlUtil.fetchParamV("doc");
 		docId && that.doInfo(docId);
 		
-		commonUtil.http(Path.docList, {}, function(data){
-			var email = localStorage.getItem('email');
-			email && $("#user-email").text(email.substring(0, email.indexOf("@")));
-			that.renderDocOfMenu(data.results, $("#sidebar-menu"));
-		});
 		
 		that.bindEvent();
 	},
@@ -20,17 +17,27 @@ var Index = {
 		var that =this;
 		
 	},
+	
+	load : function (spaceCode){
+		var that =this;
+		commonUtil.http(Path.docList, {spaceCode: spaceCode}, function(data){
+			$("#sidebar-menu").find(".doc-menu-item").remove();
+			that.renderDocOfMenu(data.results, $("#sidebar-menu"));
+		});
+	},
+	
 	//渲染左菜单 
 	renderDocOfMenu : function (results, parent){
 		var that =this;
 		$(results).each(function(index, doc){
 			if(doc.leaf){
-				$(`<li id="doc-menu-${doc.docId}" data-docid="${doc.docId}" data-title="${doc.title}"><a href="javascirpt:void(0);">${doc.title}</a></li>`)
+				$(`<li id="doc-menu-item doc-menu-${doc.docId}" class="doc-menu-item" data-docid="${doc.docId}" data-title="${doc.title}">
+						<a href="javascirpt:void(0);">${doc.title}</a></li>`)
 				.bind("click", function(){
 					that.docActive( doc, false);
 				}).appendTo(parent);
 			}else{
-				var li = $(`<li id="doc-menu-${doc.docId}" data-docid="${doc.docId}"  data-title="${doc.title}">
+				var li = $(`<li id="doc-menu-${doc.docId}" class="doc-menu-item" data-docid="${doc.docId}"  data-title="${doc.title}">
                 	<ul class="doc-subs"></ul>
             	</li>`);
 				li.appendTo(parent); //<i class="ti-folder"></i>

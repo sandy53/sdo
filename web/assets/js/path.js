@@ -8,6 +8,10 @@ var Path = {
 	vcode : new path( "/api/sdo/user/vcode"),
 	doLogin : new path( "/api/sdo/user/login/email", "POST"),
 	doLock :  new path( "/api/sdo/doc/lock", "POST"),
+	
+	doSpace: new path( "/api/sdo/space/save", "POST"),
+	
+	doSpaceList: new path( "/api/sdo/space/list"),
 }
 
 function path(url, method){

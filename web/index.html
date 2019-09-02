@@ -36,7 +36,9 @@
     <link href="assets/css/style.css" rel="stylesheet">
 
     <style type="text/css">
-    	
+    	.fn-hide {
+    		display: none;
+    	}
     	.sidebar{
     		width: 300px;
     	}
@@ -55,6 +57,10 @@
 		.sidebar i {
     		font-size: 1.0em;
     		margin-right: 0px;
+		}
+		
+		.sidebar #sidebar-menu .label {
+			color: #d1d1d1;
 		}
 		
 		/** wang edit*/
@@ -124,7 +130,25 @@
     	border: 1px solid #ddd;
     	padding: 8px;
 	}
-
+	
+	
+	.space-content {
+		padding: 15px;
+	}
+	.space-content .card{
+		border: 1px solid #fff;
+		line-height: 37px;
+	}
+	.space-content .card:hover, .space-content .active{
+		border: 1px solid #f96332;
+		cursor:pointer;
+	}
+	.space-opt {
+		margin-left: 15px;
+	}
+	.space-opt:hover {
+		color:  #f96332;
+	}
     </style>
 
 </head>
@@ -140,16 +164,12 @@
             <div class="nano-content">
                 <ul id="sidebar-menu">
 					<li class="label">Main</li>
-                    <li class="active"><a href="index.html"><i class="ti-home"></i> Dashboard </a></li>	            
-                    <li title="功能暂未开发"><a href="#"><i class="ti-user"></i> Profile</a></li>
-					<li class="label">Document</li>
+                    <li class="active" id="menu-space"><a href="javascript:void(0);" ><i class="ti-home"></i> 空间目录 </a></li>	            
+					<li class="label">文档目录</li>
                 </ul>
             </div>
         </div>
     </div><!-- /# sidebar -->
-
-
-
 
     <div class="header">
         <div class="pull-left">
@@ -165,57 +185,6 @@
 
         <div class="pull-right p-r-15">
             <ul>
-                <li class="header-icon dib"><i class="ti-bell"></i>
-                    <div class="drop-down">
-                        <div class="dropdown-content-heading">
-                            <span class="text-left">Recent Notifications</span>
-                        </div>
-                        <div class="dropdown-content-body">
-                            <ul>
-                                <!-- <li>
-                                    <a href="#">
-                                        <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
-                                        <div class="notification-content">
-                                            <small class="notification-timestamp pull-right">02:34 PM</small>
-                                            <div class="notification-heading">Mr. Wolf</div>
-                                            <div class="notification-text">5 members joined today </div>
-                                        </div>
-                                    </a>
-                                </li> -->
-                               
-                                <li class="text-center">
-                                    <a href="#" class="more-link">See All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="header-icon dib"><i class="ti-email"></i>
-                    <div class="drop-down">
-                        <div class="dropdown-content-heading">
-                            <span class="text-left">2 New Messages</span>
-                            <a href="email.html"><i class="ti-pencil-alt pull-right"></i></a>
-                        </div>
-                        <div class="dropdown-content-body">
-                            <ul>
-                               <!--  <li class="notification-unread">
-                                    <a href="#">
-                                        <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/1.jpg" alt="" />
-                                        <div class="notification-content">
-                                            <small class="notification-timestamp pull-right">02:34 PM</small>
-                                            <div class="notification-heading">John Doe</div>
-                                            <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
-                                        </div>
-                                    </a>
-                                </li> -->
-                                <li class="text-center">
-                                    <a href="#" class="more-link">See All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-				<li class="header-icon dib chat-sidebar-icon"><i class="ti-comment"></i></li>
                 <li class="header-icon dib"><!-- <img class="avatar-img" src="assets/images/avatar/1.jpg" alt="" /> --> 
                 	<span class="user-avatar"><span id="user-email"></span> <i class="ti-angle-down f-s-10"></i></span>
                     <div class="drop-down dropdown-profile">
@@ -261,7 +230,21 @@
                         </div>
                     </div><!-- /# column -->
                 </div><!-- /# row -->
-                <div class="main-content">
+                
+                <div class="space-content">
+                	<div class="row"> 
+                		<div class="col-lg-3 space-plus">
+                				<div class="card alert" title="添加新空间"> 
+                					<i class="ti-plus space-toadd"></i>
+                					<input type="text" class="form-control fn-hide space-additem space-input" placeholder="空间名称">
+                					<i class="ti-check fn-hide space-additem space-opt space-save" title="保存"></i>
+                					<i class="ti-close fn-hide space-additem space-opt space-cancel" title="取消"></i>
+                				</div>
+                		</div>
+                	</div>
+                </div>
+                
+                <div class="main-content fn-hide">
 					<div class="row doc-info-item"> 
 						<div class="col-lg-12">
 							<div class="card alert">
@@ -400,6 +383,7 @@
    <script src="assets/js/utils/common_util.js?t=1231"></script>
    <script src="assets/js/index.js?t=1231"></script>
    <script src="assets/js/login.js?t=123121231"></script>
+   <script src="assets/js/space.js?t=12311"></script>
    <script src="assets/js/do_doc.js?t=12311"></script>
 
 
@@ -423,6 +407,7 @@
 		$(function() {
 			Index.init();
 			Login.init();
+			Space.init();
 			Doc.init();
 			$("#btn-doc-save").bind("click", function() {
 				var title = $("#input-doc-title").val();

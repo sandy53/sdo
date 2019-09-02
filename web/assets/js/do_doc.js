@@ -119,6 +119,12 @@ var Doc = {
 		var param =  {title:title, content:content, parent : Doc.input.parent.val(), docId: Doc.input.id.val()};
 		if( ACTIVE_OPT == 'new'){
 			param.parent = param.docId ;  //新增的时候当前活动文档就是新文档的父文档
+			var spaceCode = localStorage.getItem('space-code');
+		    if(!spaceCode){
+		    	commonUtil.msg("未正确选择空间目录", true);
+				return false;
+		    }
+		    param.spaceCode = spaceCode;
 			param.docId = null;  
 		}else if(ACTIVE_OPT == 'edit'){
 			param.parent = null;
@@ -129,7 +135,7 @@ var Doc = {
 			param.content = null; 
 			if(param.parent == param.docId){
 				commonUtil.msg("移动位置错误，重新选择!", true);
-				return;
+				return false;
 			}
 		}
 		console.log(param)
