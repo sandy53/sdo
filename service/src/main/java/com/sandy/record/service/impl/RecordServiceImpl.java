@@ -177,7 +177,7 @@ public class RecordServiceImpl implements RecordService {
         if (object != null && object instanceof Map<?, ?>) {
             map = (Map<String, RecordInfo>) object;
             if (!map.isEmpty()) {
-                //return map;
+                return map;
             }
         }
         List<RecordInfo> list = recordMapper.selectAllRecordInfo();

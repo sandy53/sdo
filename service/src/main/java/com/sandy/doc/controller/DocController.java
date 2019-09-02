@@ -45,10 +45,12 @@ public class DocController {
         condition.setColumn("parent");
         condition.setValue(parent != null ? parent : "");
         conditions.add(condition);
-        condition = new Condition();
-        condition.setColumn("space_code");
-        condition.setValue(spaceCode != null ? spaceCode : "");
-        conditions.add(condition);
+        if (spaceCode != null) {
+            condition = new Condition();
+            condition.setColumn("space_code");
+            condition.setValue(spaceCode);
+            conditions.add(condition);
+        }
         query.setConditions(conditions);
         docService.doQuery(query);
 
