@@ -67,6 +67,12 @@ var Index = {
 			Index.doInfo(doc.docId);
 			Index.activeInfo(doc);
 			Index.appendToUrl(doc);
+			
+			if($(".main-content").hasClass("fn-hide")){
+				$(".main-content").removeClass("fn-hide");
+				$(".space-content").addClass("fn-hide");
+			}
+			
 		}
 		if(loadSubs){
 			Index.loadSubs(doc); //加载子目录

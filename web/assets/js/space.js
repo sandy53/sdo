@@ -68,9 +68,7 @@ var Space = {
     doClick : function (code){
     	var that = this;
     	//初始化
-		
 		if(code){
-			$(".main-content").removeClass("fn-hide");
 			$(".space-content").addClass("fn-hide");
 		}else{
 			code = localStorage.getItem('space-code');
@@ -80,7 +78,10 @@ var Space = {
     	$(".space-"+code).find(".card").addClass("active");
     	localStorage.setItem('space-code', code);
      	Index.load(code);
-   
+     	
+     	
+     	
+     	
     }
 
 	
