@@ -233,18 +233,11 @@
                 
                 <div class="space-content">
                 	<div class="row"> 
-                		<div class="col-lg-3 space-plus">
-                				<div class="card alert" title="添加新空间"> 
-                					<i class="ti-plus space-toadd"></i>
-                					<input type="text" class="form-control fn-hide space-additem space-input" placeholder="空间名称">
-                					<i class="ti-check fn-hide space-additem space-opt space-save" title="保存"></i>
-                					<i class="ti-close fn-hide space-additem space-opt space-cancel" title="取消"></i>
-                				</div>
-                		</div>
+                		
                 	</div>
                 </div>
                 
-                <div class="main-content  fn-hide">
+                <div class="main-content ">
 					<div class="row doc-info-item"> 
 						<div class="col-lg-12">
 							<div class="card alert">
@@ -260,9 +253,7 @@
 										</ul>
 									</div>
 								</div>
-								<div id="doc-content" >
-									
-								</div>
+								<div  id="editor"></div>
 								<div class="text-right"><span id="doc-info-time"></span></div>
 							</div>
 							
@@ -370,16 +361,11 @@
 
 
 
-	<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-<!-- 	<script type="text/javascript"
-		src="./assets/components/wangEditor/wangEditor.min.js"></script>
-		 -->
 	<script type="text/javascript" charset="utf-8" src="./assets/components/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="./assets/components/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="./assets/components/ueditor/ueditor.all.js"> </script>
 	<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="./assets/components/ueditor/lang/zh-cn/zh-cn.js"></script>	
-		
 		
 	<script src="assets/js/lib/toastr/toastr.min.js"></script><!-- scripit init-->
     <script src="assets/js/lib/toastr/toastr.init.js"></script><!-- scripit init-->
@@ -396,41 +382,13 @@
 
 
 	<script>
-		//选择中的文档 
-		var ACTIVE_DOC = null;
-		var ACTIVE_OPT = null;
-
-		 var editor = UE.getEditor('input-doc-content');
-	
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
 	
 		$(function() {
-			Index.init();
-			Login.init();
-			Space.init();
-			Doc.init();
 			
-			
-			$("#btn-doc-save").bind("click", function() {
-				var title = $("#input-doc-title").val();
-				if (!title) {
-					alert("标题不能为空呀!!!");
-					return false;
-				}
-				Doc.doSave(title, editor.getContent());
-			});
 		});
-		
-		
-		
-		/* 	var E = window.wangEditor
-			var editor = new E('#input-doc-content') */
-
-			// 或者 var editor = new E( document.getElementById('editor') )
-			// 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
-	/* 		editor.customConfig.uploadImgShowBase64 = true; // 使用 base64 保存图片
-			editor.customConfig.uploadImgServer = '/api/sdo/file/upload/image'; // 上传图片到服务器  设置之后才能复制粘贴 图片 
-			editor.customConfig.uploadFileName = 'imgFile'
-			editor.create(); */
    </script>
 
 </body>

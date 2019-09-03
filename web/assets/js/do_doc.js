@@ -64,7 +64,7 @@ var Doc = {
 		Doc.input.parent.empty();
 		Doc.input.id.val(doc.docId);
 		Doc.input.title.val(doc.title);
-		editor.txt.html(doc.detail.content);
+		editor.setContent(doc.detail.content);
 		$(".doc-move").hide();
 	},
 	  //复制初始化
@@ -76,7 +76,7 @@ var Doc = {
 		}
 		Doc.input.id.empty();
 		Doc.input.title.val(doc.title + "      复制");
-		editor.txt.html(doc.detail.content);
+		editor.setContent(doc.detail.content);
 		$(".doc-move").hide();
 	},
 	  //移动初始化
@@ -88,7 +88,7 @@ var Doc = {
 		}
 		Doc.input.id.val(doc.docId);
 		Doc.input.title.val(doc.title);
-		editor.txt.html(doc.detail.content);
+		editor.setContent(doc.detail.content);
 		$(".doc-move").show();
 	},
     
@@ -99,7 +99,8 @@ var Doc = {
     	//不会清除上级文档信息
     	$(".input-doc-item").empty();
     	Doc.input.title.val("");
-    	editor.txt.html("");
+    	editor.setContent("");
+    	//editor.txt.html("");
     },
     //元素切换
     optRender : function (showEidt){
