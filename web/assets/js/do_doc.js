@@ -10,6 +10,9 @@ var Doc = {
 		title : $("#input-doc-title"),
 		content : $("#input-doc-content"),
 	},
+	data :{
+		parent : null,
+	},
     init : function (){
     	var that = this;
     	that.bindEvent();
@@ -17,6 +20,21 @@ var Doc = {
     },
     bindEvent :function(){
     	var that = this;
+    	$("#doc-to-add").bind("click", function(){
+    		var spaceCode = localStorage.getItem('space-code');
+		    if(!spaceCode){
+		    	commonUtil.msg("未正确选择空间目录", true);
+				return false;
+		    }
+    		$(".main-content").removeClass("fn-hide");
+			$(".space-content").addClass("fn-hide");
+    		$(".doc-update-item").show();
+    		$(".doc-info-item").hide();
+    		
+    		ACTIVE_OPT = "new";
+    		
+		});
+    	
     	$(".doc-info-opt").bind("click", function(){
 			var code = $(this).data("code");
 			code && that.infoOpt(code);
@@ -30,6 +48,17 @@ var Doc = {
     	$(".doc-locked").bind("click", ()=>{
     		that.doLock('unlock');
     	});
+    	
+    	$(".j-do-move-clear").bind("click", function(){
+			$("#doc-move-parent-title").val("");
+    		$("#doc-move-parent-code").val("");
+		});
+    	
+    	$(".j-do-move-save").bind("click", function(){
+    		Doc.data.parent = $("#doc-move-parent-code").val();
+    		that.doSave();
+		});
+    	
     },
     //对详情的操作
     infoOpt  : function(code){
@@ -47,7 +76,7 @@ var Doc = {
 				break;
 			case "move":
 				that.initMove();
-				break;
+				return;
 			default:
 				return false;
 		}
@@ -88,7 +117,6 @@ var Doc = {
 		}
 		Doc.input.id.val(doc.docId);
 		Doc.input.title.val(doc.title);
-		editor.setContent(doc.detail.content);
 		$(".doc-move").show();
 	},
     
@@ -117,7 +145,7 @@ var Doc = {
 	doSave : function(title, content){
 		var that = this;
 		var parent = Doc.input.parent.val();
-		var param =  {title:title, content:content, parent : Doc.input.parent.val(), docId: Doc.input.id.val()};
+		var param =  {operation:ACTIVE_OPT,  title:title, content:content, parent : Doc.input.parent.val(), docId: Doc.input.id.val()};
 		if( ACTIVE_OPT == 'new'){
 			param.parent = param.docId ;  //新增的时候当前活动文档就是新文档的父文档
 			var spaceCode = localStorage.getItem('space-code');
@@ -134,12 +162,15 @@ var Doc = {
 		}else if(ACTIVE_OPT == 'move'){
 			param.title = null; 
 			param.content = null; 
+			param.parent = Doc.data.parent;
+			param.updateType = "MOVE";
 			if(param.parent == param.docId){
 				commonUtil.msg("移动位置错误，重新选择!", true);
 				return false;
 			}
 		}
 		console.log(param)
+		console.log(ACTIVE_OPT)
 		//return;
 		commonUtil.http(path, param, function(data){
 			commonUtil.msg("保存成功");

@@ -214,7 +214,7 @@
                     <div class="col-lg-2 p-0">
                         <div class="page-header">
                             <div class="page-title">
-                                <h1><a class="doc-info-opt" data-code="new" href="javascript:void(0);"style="color:#f96332;" title="创建新文档">
+                                <h1><a class="" id="doc-to-add" href="javascript:void(0);"style="color:#f96332;" title="创建新文档">
                                 		 <i class="ti-plus"></i></a>
                                 </h1>
                             </div>
@@ -260,8 +260,20 @@
 										</ul>
 									</div>
 								</div>
-								<div id="doc-content" >
+								<!-- <div class="form-group doc-move">
+										<input type="text" id="input-doc-parent-title" 
+											class="form-control input-focus input-doc-item" readonly="readonly" placeholder="点击左侧目录确认要移动的位置" >
+								</div> -->
+									  <div class="form-group doc-move" >
+									    <div class="input-group">
+									      <input type="hidden" class="form-control" id="doc-move-parent-code">
+									      <input type="text" class="form-control input-focus" id="doc-move-parent-title"  readonly="readonly" placeholder="点击左侧目录确认要移动的位置" >
+									      <div class="input-group-addon j-do-move-save" title="移动">&nbsp;&nbsp;<i class="ti-check"></i>&nbsp;&nbsp;</div>
+									      <div class="input-group-addon j-do-move-clear " title="清空"><i class="ti-close"></i></div>
+									    </div>
+									  </div>
 									
+								<div id="doc-content" >
 								</div>
 								<div class="text-right"><span id="doc-info-time"></span></div>
 							</div>
@@ -297,12 +309,7 @@
 										<input type="text" id="input-doc-title" 
 											class="form-control input-focus input-doc-item" placeholder="这里需要一个吊炸天的标题" >
 									</div>
-									<div class="form-group doc-move">
-										<input type="text" id="input-doc-parent-title" 
-											class="form-control input-focus input-doc-item" readonly="readonly" placeholder="点击左侧目录确认要移动的位置" >
-									</div>
 								</div>
-									  
 								<div class="doc-content">
 									<div id="input-doc-content">
 										<!-- 内容 -->
@@ -399,9 +406,8 @@
 		//选择中的文档 
 		var ACTIVE_DOC = null;
 		var ACTIVE_OPT = null;
-
+		
 		 var editor = UE.getEditor('input-doc-content');
-	
 	
 		$(function() {
 			Index.init();

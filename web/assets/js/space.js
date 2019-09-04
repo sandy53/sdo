@@ -78,11 +78,8 @@ var Space = {
     	$(".space-"+code).find(".card").addClass("active");
     	localStorage.setItem('space-code', code);
      	Index.load(code);
-     	
-     	
-     	
-     	
     }
+    
 
 	
 

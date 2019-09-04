@@ -61,8 +61,8 @@ var Index = {
 			}
 		}
 		if(ACTIVE_OPT == "move"){
-			$("#input-doc-parent-title").val(doc.title);
-			$("#input-doc-parent").val(doc.docId);
+			$("#doc-move-parent-title").val(doc.title);
+    		$("#doc-move-parent-code").val(doc.docId);
 		}else{
 			Index.doInfo(doc.docId);
 			Index.activeInfo(doc);
@@ -100,6 +100,10 @@ var Index = {
 				console.log(data);
 				return false;
 			}
+			
+			$(".main-content").show();
+			$(".space-content").hide();
+			
 			$("#doc-info-title").text(data.title);
 			$("#doc-info-time").text(commonUtil.time(data.createTime));
 			$("#doc-content").html(data.detail.content);
