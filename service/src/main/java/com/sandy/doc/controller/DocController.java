@@ -15,6 +15,7 @@ import com.sandy.auth.core.AbstractAuthInterceptor.Operator;
 import com.sandy.common.Assert;
 import com.sandy.common.model.ReqResult;
 import com.sandy.common.model.ResultCode;
+import com.sandy.doc.enums.UpdateType;
 import com.sandy.doc.model.Doc;
 import com.sandy.doc.service.DocService;
 import com.sandy.record.enums.RecordEnum;
@@ -68,8 +69,10 @@ public class DocController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Object doRecord(String title, String content, String docId, String parent,
+    public Object doRecord(String updateType, String title, String content, String docId,
+                           String parent,
                            String spaceCode) {
+
         Doc doc = new Doc();
         doc.setTitle(title);
         doc.setContent(content);
@@ -77,7 +80,7 @@ public class DocController {
         doc.setParent(parent);
         doc.setSpaceCode(spaceCode);
         try {
-            docService.doSave(doc);
+            docService.doSave(updateType != null ? UpdateType.valueOf(updateType) : null, doc);
             return new ReqResult<>(doc);
         } catch (Exception e) {
             return new ReqResult<>(ResultCode.FIELD, e.getMessage());

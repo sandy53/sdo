@@ -14,6 +14,7 @@ import com.sandy.auth.core.AbstractAuthInterceptor.Operator;
 import com.sandy.common.Assert;
 import com.sandy.common.exception.RuningException;
 import com.sandy.common.model.ResultCode;
+import com.sandy.doc.enums.UpdateType;
 import com.sandy.doc.model.Doc;
 import com.sandy.doc.model.DocContent;
 import com.sandy.doc.model.DocLog;
@@ -49,7 +50,14 @@ public class DocServiceImpl implements DocService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void doSave(Doc doc) throws Exception {
+    public void doSave(UpdateType updateType, Doc doc) throws Exception {
+
+        if (updateType == UpdateType.MOVE) {
+
+            //移动
+            this.doMove(doc);
+            return;
+        }
 
         if (StringUtils.isBlank(doc.getDocId())) {
             //新增
@@ -59,12 +67,6 @@ public class DocServiceImpl implements DocService {
         //校验是否锁定
         this.checkLocked(doc.getDocId());
 
-        if (StringUtils.isNotBlank(doc.getDocId())
-                   && StringUtils.isNotBlank(doc.getParent())) {
-            //移动
-            this.doMove(doc);
-            return;
-        }
         //修改
         this.doUpdate(doc);
     }
@@ -134,41 +136,41 @@ public class DocServiceImpl implements DocService {
      */
     private void doMove(Doc doc) {
         Assert.notEmpty(doc.getDocId());
-        Assert.notEmpty(doc.getParent());
         if (StringUtils.equals(doc.getDocId(), doc.getParent())) {
             //未移动操作
             return;
         }
-        //新父文档ID
         String newParentId = doc.getParent();
-        //先查新父类信息
+        //查当前文档信息
         RecordOne one = new RecordOne(RecordEnum.Doc);
-        one.addCondition("docId", newParentId);
-        Map<String, Object> newParentInfo = recordService.doOne(one);
-        if (newParentInfo == null || newParentInfo.isEmpty()) {
-            throw new RuningException(ResultCode.RECORD_NOT_EXIST);
-        }
-        //再查当前文档信息
-        one = new RecordOne(RecordEnum.Doc);
         one.addCondition("docId", doc.getDocId());
         Map<String, Object> docInfo = recordService.doOne(one);
         if (docInfo == null || docInfo.isEmpty()) {
             throw new RuningException(ResultCode.RECORD_NOT_EXIST);
         }
-
         String docParent = docInfo.get("parent").toString(); //当前父文档
         if (StringUtils.equals(newParentId, docParent)) {
             //未移动操作
             return;
         }
-        //变更新的父节点为非叶子节点
-        this.parentUpdate(newParentId);
+
+        if (!StringUtils.isBlank(newParentId)) {
+            //查新父类信息
+            one = new RecordOne(RecordEnum.Doc);
+            one.addCondition("docId", newParentId);
+            Map<String, Object> newParentInfo = recordService.doOne(one);
+            if (newParentInfo == null || newParentInfo.isEmpty()) {
+                throw new RuningException(ResultCode.RECORD_NOT_EXIST);
+            }
+            //变更新的父节点为非叶子节点
+            this.parentUpdate(newParentId);
+        }
 
         //修改
         long updateTime = System.currentTimeMillis();
         RecordUpdate update = new RecordUpdate(RecordEnum.Doc);
         update.addCondition("docId", doc.getDocId());
-        update.addUpdateField("parent", newParentId);
+        update.addUpdateField("parent", doc.getParent());
         update.addUpdateField("updateTime", updateTime);
         recordService.doUpdate(update);
         //日志
@@ -176,7 +178,7 @@ public class DocServiceImpl implements DocService {
         //DocLog 
         DocLog log = new DocLog();
         log.setDocId(doc.getDocId());
-        log.setRemarks("移动: " + docParent + " -> " + newParentId);
+        log.setRemarks("移动: " + docParent + " -> " + doc.getParent());
         log.setUcode(operator.fetchUserId());
         log.setCreateTime(updateTime);
         RecordSave recordSave = new RecordSave(RecordEnum.DocLog.name(), Arrays.asList(log));

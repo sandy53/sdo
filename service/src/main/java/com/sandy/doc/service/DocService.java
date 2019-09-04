@@ -2,6 +2,7 @@ package com.sandy.doc.service;
 
 import java.util.Map;
 
+import com.sandy.doc.enums.UpdateType;
 import com.sandy.doc.model.Doc;
 import com.sandy.record.model.RecordQuery;
 
@@ -20,7 +21,7 @@ public interface DocService {
      * @param content
      * @throws Exception 
      */
-    void doSave(Doc doc) throws Exception;
+    void doSave(UpdateType updateType, Doc doc) throws Exception;
 
     void doQuery(RecordQuery query);
 
