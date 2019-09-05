@@ -174,17 +174,9 @@ var Doc = {
 		//return;
 		commonUtil.http(path, param, function(data){
 			commonUtil.msg("保存成功");
-			Doc.optRender(false);
-			if(ACTIVE_OPT == 'move'){
-				$("#doc-info-title").text(title);
-				$("#doc-content").html(content);
-			}else{
-				$("#doc-info-title").text(data.title);
-				$("#doc-info-time").text(commonUtil.time(data.createTime));
-				$("#doc-content").html(data.content);
-			}
-			ACTIVE_OPT = null;
-			Doc.clear();
+			setTimeout(() => {
+				location.reload();
+			}, 500);
 		});
 	},
 	//取消提醒
